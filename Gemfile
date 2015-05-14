@@ -43,3 +43,6 @@ group :development, :test do
   gem 'spring'
 end
 
+gem 'devise'
+gem 'haml'
+gem 'bootstrap-sass'
