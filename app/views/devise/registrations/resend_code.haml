@@ -1,0 +1,6 @@
+= form_tag(resend_code_path) do
+  .form-group
+    = label_tag :phone
+    = phone_field :user, :phone, class: 'form-control'
+
+  = submit_tag 'Resend Code', class: 'btn btn-default'

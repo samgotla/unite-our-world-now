@@ -1,9 +1,14 @@
 %h2 Sign up
 = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
   = devise_error_messages!
+  
   .form-group
     = f.label :email
     = f.email_field :email, autofocus: true, class: 'form-control'
+
+  .form-group
+    = f.label :phone
+    = f.phone_field :phone, class: 'form-control'
 
   .form-group
     = f.label :password

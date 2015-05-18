@@ -11,6 +11,10 @@
       Currently waiting confirmation for: #{resource.unconfirmed_email}
 
   .form-group
+    = f.label :phone
+    = f.phone_field :phone, class: 'form-control'
+
+  .form-group
     = f.label :password
     %i (leave blank if you don't want to change it)
     = f.password_field :password, autocomplete: "off", class: 'form-control'
@@ -26,6 +30,20 @@
 
   .actions
     = f.submit "Update", class: 'btn btn-default'
+
+- if !current_user.sms_confirmed
+  %h3 Verify Your Account
+  = form_tag(verify_code_path) do
+    .form-group
+      = label_tag :code
+      = text_field :user, :sms_code, value: nil, class: 'form-control'
+
+    = submit_tag 'Verify Account', class: 'btn btn-default'
+
+  %h3 Resend Code
+
+  = form_tag(resend_code_path) do
+    = submit_tag 'Resend Code', class: 'btn btn-default'
 
 %h3 Cancel my account
 %p

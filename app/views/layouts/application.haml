@@ -7,10 +7,10 @@
     = csrf_meta_tags
     
   %body
-    %p.notice= notice
-    %p.alert= alert
-
     .container-fluid
+      %p.notice= notice
+      %p.alert= alert
+
       %nav.navbar.navbar-default
         .navbar-header
           = link_to 'Home', root_path, { class: 'navbar-brand' }
