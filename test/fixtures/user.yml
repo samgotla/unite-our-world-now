@@ -17,4 +17,5 @@ user:
   encrypted_password: <%= User.new.send(:password_digest, 'password') %>
   phone: <%= TWILIO_MAGIC_VALID_NUMBER %>
   sms_confirmed: true
+  role: poster
   

@@ -1,5 +1,4 @@
-%ul
-  %li
-    %em User's personal forum links here
-  %li
-    %em Show top forums if user not logged in?
+%h3 Your Forums
+%ul#forums
+  - forums.each do |f|
+    %li= f.name
