@@ -9,11 +9,12 @@ class User < ActiveRecord::Base
 
   before_create :set_defaults
   before_create :generate_sms_code
-  after_save :send_sms_confirmation
+  after_create :send_sms_confirmation
   before_save :update_sms_code
 
   phony_normalize :phone, :default_country_code => 'US'
 
+  validates :email, presence: true, uniqueness: true
   validates :phone, phony_plausible: true, uniqueness: true, presence: true
 
   def set_defaults
@@ -37,8 +38,9 @@ class User < ActiveRecord::Base
   def update_sms_code
 
     # Reverify when phone number is changed
-    if self.changes()[:phone]
+    if !self.new_record? and self.changes()[:phone]
       self.generate_sms_code()
+      self.send_sms_confirmation()
     end
   end
 
