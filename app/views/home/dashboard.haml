@@ -1,0 +1,22 @@
+= link_to t('links.edit_account'), edit_user_registration_path, class: 'btn btn-default'
+
+%h3= t('headers.your_approved_posts')
+%em Links to user's approved posts
+
+%h3= t('headers.your_pending_posts')
+%em Links to user's unapproved posts
+
+- if current_user.admin?
+  %h3= t('headers.pending_users')
+  %em List of users awaiting SMS verification
+
+  %h3= t('headers.moderators_by_region')
+  %em List of moderators grouped by region (?)
+
+  %h3= t('headers.find_user')
+  %em Find a user by phone or email (for manual verification, mod promotion, banning, etc.)
+
+- if current_user.moderator?
+  %h3= t('headers.mod_pending_posts')
+  %em Pending posts in moderator's region
+

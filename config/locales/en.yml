@@ -1,4 +1,6 @@
 en:
+  title: 'Unite Our World Now'
+  
   msg:
     please_confirm: 'Please confirm your account.'
     already_confirmed: 'User already confirmed.'
@@ -7,3 +9,22 @@ en:
     invalid_code: 'Invalid verification code.'
     check_for_code: 'Please check your phone for a verification code.'
     unknown_error: 'Unknown error occurred.'
+
+  links:
+    dashboard: 'Dashboard'
+    log_in: 'Log In'
+    log_out: 'Log Out'
+    home: 'Home'
+    about: 'About'
+    forums: 'Forums'
+    edit_account: 'Edit Your Account'
+
+  headers:
+    your_approved_posts: 'Your Approved Posts'
+    your_pending_posts: 'Your Pending Posts'
+    pending_users: 'Users Awaiting Verification'
+    moderators_by_region: 'Moderators'
+    find_user: 'Search For A User'
+    mod_pending_posts: 'Pending Posts In Your Region'
+    
+    

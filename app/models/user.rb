@@ -1,11 +1,13 @@
 class User < ActiveRecord::Base
   SMS_CODE_LENGTH = 6
+  ROLES = %w[admin moderator poster]
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  before_create :set_defaults
   before_create :generate_sms_code
   after_save :send_sms_confirmation
   before_save :update_sms_code
@@ -13,6 +15,12 @@ class User < ActiveRecord::Base
   phony_normalize :phone, :default_country_code => 'US'
 
   validates :phone, phony_plausible: true, uniqueness: true, presence: true
+
+  def set_defaults
+    if !self.role
+      self.role = 'poster'
+    end
+  end
 
   def generate_sms_code
     self.sms_code = User.confirmation_code()
@@ -32,6 +40,18 @@ class User < ActiveRecord::Base
     if self.changes()[:phone]
       self.generate_sms_code()
     end
+  end
+
+  def poster?
+    return self.role == 'poster'
+  end
+
+  def moderator?
+    return self.role == 'moderator'
+  end
+
+  def admin?
+    return self.role == 'admin'
   end
 
   private

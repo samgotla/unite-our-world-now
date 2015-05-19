@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title Unite Our World Now
+    %title= t 'title'
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
@@ -13,22 +13,20 @@
 
       %nav.navbar.navbar-default
         .navbar-header
-          = link_to 'Home', root_path, { class: 'navbar-brand' }
+          = link_to t('links.home'), root_path, { class: 'navbar-brand' }
 
         %ul.nav.navbar-nav
-          %li
-            %a(href='#') Find Your Forums
-          %li
-            %a(href='#') About
+          %li= link_to t('links.forums'), forums_path
+          %li= link_to t('links.about'), about_path
           %li
             - if user_signed_in?
-              = link_to 'Your Account', edit_user_registration_path
+              = link_to t('links.dashboard'), dashboard_path
             - else
-              = link_to 'Log In', new_user_session_path
+              = link_to t('links.log_in'), new_user_session_path
 
           - if user_signed_in?
             %li
-              = link_to 'Log Out', destroy_user_session_path, method: 'delete'
+              = link_to t('links.log_out'), destroy_user_session_path, method: 'delete'
 
       #content
         = yield
