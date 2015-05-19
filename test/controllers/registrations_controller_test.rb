@@ -73,22 +73,6 @@ class RegistrationsControllerTest < ActionController::TestCase
     assert_not_nil updated_user
   end
 
-  test 'should unset confirmed when phone number is changed' do
-    user = FactoryGirl.create(:user)
-
-    sign_in user
-
-    post :update, {
-           user: {
-             phone: TWILIO_MAGIC_VALID_NUMBER,
-             current_password: 'password'
-           }
-         }
-
-    updated_user = User.find_by_email(user.email)
-    assert_not updated_user.sms_confirmed
-  end
-
   test 'should not be authorized to resend if not logged in' do
     post :resend_code
     assert_redirected_to new_user_session_path

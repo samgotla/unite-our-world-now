@@ -30,4 +30,11 @@ class UserTest < ActiveSupport::TestCase
     user = FactoryGirl.create(:user)
     assert_equal(User.sms_code_length, user.sms_code.length)
   end
+
+  test 'should unset confirmed when phone number is changed' do
+    user = FactoryGirl.create(:user, sms_confirmed: true)
+    user.update(phone: Faker::PhoneNumber::cell_phone)
+
+    assert_not user.sms_confirmed
+  end
 end
