@@ -20,6 +20,7 @@ end
 
 group :production do
   gem 'mysql'
+  gem 'rails_12factor'
 end
 
 gem 'devise'
