@@ -37,4 +37,10 @@ class UserTest < ActiveSupport::TestCase
 
     assert_not user.sms_confirmed
   end
+
+  test 'should send SMS when created' do
+    user = FactoryGirl.build(:user)
+    user.sms_code = '123456'
+    assert user.send(:should_send_sms?)
+  end
 end

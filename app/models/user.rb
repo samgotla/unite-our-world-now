@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
   private
 
   def send_sms_confirmation
-    if self.changes()[:sms_code] or self.previous_changes()[:sms_code]
+    if should_send_sms?
       logger.debug 'Queuing SMS to %s (code: %s)' % [ self.phone, self.sms_code ]
 
       SendSmsConfirmationJob.perform_later(self)
@@ -57,6 +57,10 @@ class User < ActiveRecord::Base
     if self.new_record? or self.changes()[:phone]
       self.generate_sms_code()
     end
+  end
+
+  def should_send_sms?
+    return (!self.changes()[:sms_code].nil? and !self.sms_confirmed)
   end
 
   # Generate an n-digit string of 0-9
