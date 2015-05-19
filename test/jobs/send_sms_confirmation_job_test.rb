@@ -6,6 +6,12 @@ class SendSmsConfirmationJobTest < ActiveJob::TestCase
     assert_enqueued_jobs(1)
   end
 
+  test 'that job is added when phone number is changed' do
+    user = FactoryGirl.create(:user)
+    user.update(phone: Faker::PhoneNumber::cell_phone)
+    assert_enqueued_jobs(2)
+  end
+
   test 'that SMS is sent to valid number' do
     user = FactoryGirl.create(:user)
     

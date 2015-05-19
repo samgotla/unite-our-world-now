@@ -8,9 +8,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   before_create :set_defaults
-  before_create :generate_sms_code
-  after_create :send_sms_confirmation
   before_save :update_sms_code
+  after_save :send_sms_confirmation
 
   phony_normalize :phone, :default_country_code => 'US'
 
@@ -27,21 +26,7 @@ class User < ActiveRecord::Base
     self.sms_code = User.confirmation_code()
     self.sms_confirmed = false
 
-    # Callback must return true
     return true
-  end
-
-  def send_sms_confirmation
-    SendSmsConfirmationJob.perform_later(self)
-  end
-
-  def update_sms_code
-
-    # Reverify when phone number is changed
-    if !self.new_record? and self.changes()[:phone]
-      self.generate_sms_code()
-      self.send_sms_confirmation()
-    end
   end
 
   def poster?
@@ -57,6 +42,22 @@ class User < ActiveRecord::Base
   end
 
   private
+
+  def send_sms_confirmation
+    if self.changes()[:sms_code] or self.previous_changes()[:sms_code]
+      logger.debug 'Queuing SMS to %s (code: %s)' % [ self.phone, self.sms_code ]
+
+      SendSmsConfirmationJob.perform_later(self)
+    end
+  end
+
+  def update_sms_code
+
+    # Generate code on new record or when phone number is changed
+    if self.new_record? or self.changes()[:phone]
+      self.generate_sms_code()
+    end
+  end
 
   # Generate an n-digit string of 0-9
   def self.confirmation_code
