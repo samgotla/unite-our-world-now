@@ -2,27 +2,27 @@ require 'test_helper'
 
 class RegisterAndVerifyTest < ActionDispatch::IntegrationTest
   def login(user)
-    post_via_redirect '/users/sign_in', {
+    post_via_redirect new_user_session_path, {
                         user: {
                           email: user.email,
                           password: 'password'
                         }
                       }
-    assert_equal '/', path
+    assert_equal root_path, path
   end
 
   def resend_code(user)
-    post_via_redirect '/users/resend_code'
-    assert_equal '/users/edit', path
+    post_via_redirect resend_code_path
+    assert_equal edit_user_registration_path, path
   end
 
   def verify_code(user)
-    post_via_redirect '/users/verify_code', {
+    post_via_redirect verify_code_path, {
                         user: {
                           sms_code: user.sms_code
                         }
                       }
-    assert_equal '/', path
+    assert_equal dashboard_path, path
 
     user = User.find_by_email(user.email)
 
@@ -33,7 +33,7 @@ class RegisterAndVerifyTest < ActionDispatch::IntegrationTest
     user = FactoryGirl.build(:user)
 
     open_session do
-      post_via_redirect '/users', {
+      post_via_redirect user_registration_path, {
                           user: {
                             email: user.email,
                             phone: user.phone,
@@ -42,7 +42,7 @@ class RegisterAndVerifyTest < ActionDispatch::IntegrationTest
                           }
                         }
 
-      assert_equal '/users/edit', path
+      assert_equal edit_user_registration_path, path
 
       user = User.find_by_email(user.email)
       verify_code(user)
@@ -60,6 +60,4 @@ class RegisterAndVerifyTest < ActionDispatch::IntegrationTest
       assert_not_equal user.sms_code, updated_user.sms_code
     end
   end
-
-  
 end
