@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  @@SMS_CODE_LENGTH = 6
+  SMS_CODE_LENGTH = 6
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -13,10 +13,6 @@ class User < ActiveRecord::Base
   phony_normalize :phone, :default_country_code => 'US'
 
   validates :phone, phony_plausible: true, uniqueness: true, presence: true
-
-  def self.sms_code_length
-    return @@SMS_CODE_LENGTH
-  end
 
   def generate_sms_code
     self.sms_code = User.confirmation_code()
@@ -42,7 +38,7 @@ class User < ActiveRecord::Base
 
   # Generate an n-digit string of 0-9
   def self.confirmation_code
-    return @@SMS_CODE_LENGTH.times.map {
+    return SMS_CODE_LENGTH.times.map {
       Random.rand(10)
     }.join()
   end
