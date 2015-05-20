@@ -8,8 +8,11 @@
     
   %body
     .container-fluid
-      %p.notice= notice
-      %p.alert= alert
+      - if notice
+        %p.alert.alert-info= notice
+
+      - if alert
+        %p.alert.alert-warning= alert
 
       %nav.navbar.navbar-default
         .navbar-header
