@@ -7,7 +7,7 @@ FactoryGirl.define do
 
   factory :user do
     email { Faker::Internet.email }
-    phone { Faker::Number.number(10) }
+    phone { Faker::PhoneNumber::cell_phone }
     password 'password'
     sms_code '123456'
   end
