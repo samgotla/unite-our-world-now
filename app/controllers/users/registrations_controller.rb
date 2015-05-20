@@ -1,10 +1,8 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :check_logged_in, only: [ :resend_code, :verify_code ]
-  after_action :check_sms_confirmed, only: [ :create, :update ]
 
   def resend_code
     if current_user.sms_confirmed
-      flash[:alert] = I18n.t 'msg.already_confirmed'
       redirect_to root_path
     else
 
@@ -12,7 +10,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
       current_user.generate_sms_code()
       current_user.save()
       
-      flash[:notice] = I18n.t 'msg.check_for_code'
       redirect_to edit_user_registration_path
     end
   end
@@ -30,12 +27,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   private
-
-  def check_sms_confirmed
-    if !current_user.sms_confirmed
-      flash[:notice] = I18n.t 'msg.please_confirm'
-    end
-  end
 
   # Use external method since Devise controllers are exempt from
   # authenticate_user!
