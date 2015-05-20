@@ -12,7 +12,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'should not save invalid phone' do
-    user = FactoryGirl.build(:user, phone: '1234')
+    user = FactoryGirl.build(:user, phone: 'abcd')
     assert_not user.save
   end
 

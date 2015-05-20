@@ -13,7 +13,7 @@ class SendSmsConfirmationJobTest < ActiveJob::TestCase
   end
 
   test 'that SMS is sent to valid number' do
-    user = FactoryGirl.create(:user)
+    user = FactoryGirl.create(:user, phone: TWILIO_MAGIC_VALID_NUMBER)
     
     SendSmsConfirmationJob.perform_now(user)
 

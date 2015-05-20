@@ -11,10 +11,10 @@ class User < ActiveRecord::Base
   before_save :update_sms_code
   after_save :send_sms_confirmation
 
-  phony_normalize :phone, :default_country_code => 'US'
+  phony_normalize :phone
 
   validates :email, presence: true, uniqueness: true
-  validates :phone, phony_plausible: true, uniqueness: true, presence: true
+  validates :phone, uniqueness: true, presence: true
 
   def set_defaults
     if !self.role
