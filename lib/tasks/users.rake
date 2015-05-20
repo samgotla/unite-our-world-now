@@ -9,11 +9,11 @@ namespace :users do
                        sms_confirmed: true
                       )
     
-    FactoryGirl.create(:user,
-                       email: 'moderator@example.com',
-                       role: 'mosderator',
-                       sms_confirmed: true
-                      )
+     FactoryGirl.create(:user,
+                        email: 'moderator@example.com',
+                        role: 'moderator',
+                        sms_confirmed: true
+                       )
     
     FactoryGirl.create(:user,
                        email: 'confirmed_user@example.com',
