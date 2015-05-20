@@ -43,4 +43,11 @@ class UserTest < ActiveSupport::TestCase
     user.sms_code = '123456'
     assert user.send(:should_send_sms?)
   end
+
+  test 'should not be able to post topic if unconfirmed' do
+    user = FactoryGirl.create(:user)
+    ability = Ability.new(user)
+
+    assert ability.cannot?(:post_topic, nil)
+  end
 end
