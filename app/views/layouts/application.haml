@@ -19,14 +19,14 @@
           = link_to t('links.home'), root_path, { class: 'navbar-brand' }
 
         %ul.nav.navbar-nav
-          %li= link_to t('links.about'), about_path
+          = active_nav_item t('links.about'), about_path
           
           - if user_signed_in?
-            %li= link_to t('links.forums'), forums_path
-            %li= link_to t('links.dashboard'), dashboard_path
+            = active_nav_item t('links.forums'), forums_path
+            = active_nav_item t('links.dashboard'), dashboard_path
             %li= link_to t('links.log_out'), destroy_user_session_path, method: 'delete'
           - else
-            %li= link_to t('links.log_in'), new_user_session_path
+            = active_nav_item t('links.log_in'), new_user_session_path
 
       #content
         = yield

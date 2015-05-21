@@ -34,4 +34,17 @@ class HomeControllerTest < ActionController::TestCase
     get :dashboard
     assert_select 'h3', I18n.t('headers.find_user')
   end
+
+  test 'should show active about link on nav' do
+    get :about
+    assert_select 'li.active a[href=?]', about_path
+  end
+
+  test 'should show inactive about link on nav' do
+    user = FactoryGirl.create(:user)
+    sign_in user
+    
+    r = get :dashboard
+    assert_select 'li.active a[href=?]', about_path, false
+  end
 end
