@@ -17,4 +17,9 @@ class ApplicationController < ActionController::Base
       flash[:alert] = I18n.t('msg.please_confirm')
     end
   end
+
+  # TODO: this should be in a new sessions controller
+  def after_sign_in_path_for(resource)
+    return stored_location_for(resource) || dashboard_path
+  end
 end
