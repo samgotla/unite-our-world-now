@@ -24,7 +24,6 @@ end
 gem 'devise'
 gem 'haml'
 gem 'bootstrap-sass'
-gem 'phony_rails'
 gem 'twilio-ruby'
 gem 'sidekiq'
 gem 'cancan'

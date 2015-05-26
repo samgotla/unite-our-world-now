@@ -48,16 +48,4 @@ class RegisterAndVerifyTest < ActionDispatch::IntegrationTest
       verify_code(user)
     end
   end
-
-  test 'resend code and verify' do
-    user = FactoryGirl.create(:user)
-
-    open_session do
-      login(user)
-      resend_code(user)
-
-      updated_user = User.find_by_email(user.email)
-      assert_not_equal user.sms_code, updated_user.sms_code
-    end
-  end
 end

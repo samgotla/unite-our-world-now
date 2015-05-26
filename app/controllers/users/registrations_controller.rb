@@ -5,18 +5,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
     if current_user.sms_confirmed
       redirect_to root_path
     else
-
-      # Generate new confirmation code
-      current_user.generate_sms_code()
-      current_user.save()
-      
+      current_user.send_sms_confirmation(true)
       redirect_to edit_user_registration_path
     end
   end
 
   def verify_code
     if params[:user][:sms_code] == current_user.sms_code
-      current_user.update(sms_confirmed: true)
+      current_user.update!(sms_confirmed: true)
 
       flash[:notice] = I18n.t 'msg.confirmed'
       redirect_to dashboard_path
