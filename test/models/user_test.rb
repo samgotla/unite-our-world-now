@@ -16,6 +16,11 @@ class UserTest < ActiveSupport::TestCase
     assert_not user.save
   end
 
+  test 'should not save short phone' do
+    user = FactoryGirl.build(:user, phone: '123456')
+    assert_not user.save
+  end
+
   test 'should not save user without password' do
     user = FactoryGirl.build(:user, password: nil)
     assert_not user.save
