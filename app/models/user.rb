@@ -65,7 +65,7 @@ class User < ActiveRecord::Base
   def should_send_sms?
     
     # Create
-    if self.id_changed?
+    if self.id_changed? and !self.sms_confirmed
       return true
       
     # Update
