@@ -5,7 +5,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     if current_user.sms_confirmed
       redirect_to root_path
     else
-      current_user.send_sms_confirmation(true)
+      current_user.send_sms_confirmation()
       redirect_to edit_user_registration_path
     end
   end
