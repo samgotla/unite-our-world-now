@@ -62,10 +62,9 @@ class RegistrationsControllerTest < ActionController::TestCase
 
     sign_in user
 
-    post :update, {
+    put :update, {
            user: {
-             email: user.email + 'xyz',
-             current_password: 'password'
+             email: user.email + 'xyz'
            }
          }
 
@@ -76,5 +75,21 @@ class RegistrationsControllerTest < ActionController::TestCase
   test 'should not be authorized to resend if not logged in' do
     post :resend_code
     assert_redirected_to new_user_session_path
+  end
+
+  test 'should update lat and lng' do
+    user = FactoryGirl.create(:user)
+    sign_in user    
+
+    put :update, {
+          user: {
+            latitude: -10,
+            longitude: 20
+          }
+        }
+
+    updated_user = User.find_by_email(user.email)
+    assert_equal updated_user.latitude, -10
+    assert_equal updated_user.longitude, 20
   end
 end

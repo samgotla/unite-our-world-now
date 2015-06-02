@@ -1,5 +1,3 @@
-Faker::Config.locale = 'en-US'
-
 FactoryGirl.define do
   factory :forum do
     name "MyString"
@@ -10,5 +8,7 @@ FactoryGirl.define do
     phone { Faker::PhoneNumber::cell_phone }
     password 'password'
     sms_code '123456'
+    latitude 12.3456
+    longitude 12.3456
   end
 end

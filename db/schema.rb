@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150519185003) do
+ActiveRecord::Schema.define(version: 20150602195002) do
 
   create_table "forums", force: :cascade do |t|
     t.string   "name"
@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(version: 20150519185003) do
     t.boolean  "sms_confirmed",          default: false
     t.string   "sms_code"
     t.string   "role"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

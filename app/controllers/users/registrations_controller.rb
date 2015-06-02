@@ -22,6 +22,42 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  # RegistrationsController#update pulled from Devise source
+  def update
+    self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
+    prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
+
+    resource_updated = update_resource(resource, account_update_params)
+    yield resource if block_given?
+    if resource_updated
+
+      # Don't update flash message if XHR
+      if is_flashing_format? and !request.xhr?
+        flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ?
+                      :update_needs_confirmation : :updated
+        set_flash_message :notice, flash_key
+      end
+      sign_in resource_name, resource, bypass: true
+
+      # Send blank JSON response if updating via XHR
+      # (for updating location only)
+      if request.xhr?
+        render json: {}
+      else
+        respond_with resource, location: after_update_path_for(resource)
+      end
+    else
+      clean_up_passwords resource
+      respond_with resource
+    end
+  end
+
+  protected
+
+  def update_resource(resource, params)
+    resource.update_without_password(params)
+  end
+
   private
 
   # Use external method since Devise controllers are exempt from
@@ -57,7 +93,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
       :phone,
       :password,
       :password_confirmation,
-      :current_password
+      :current_password,
+      :latitude,
+      :longitude
     )
   end
 end

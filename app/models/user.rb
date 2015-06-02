@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
   
   validates :email, presence: true, uniqueness: true
   validates :phone, uniqueness: true, presence: true, length: { minimum: 10 }
+  validates :latitude, numericality: true, allow_blank: true
+  validates :longitude, numericality: true, allow_blank: true
 
   def set_defaults
     if !self.role
@@ -41,6 +43,10 @@ class User < ActiveRecord::Base
   def send_sms_confirmation
     logger.debug 'Queuing SMS to %s (code: %s)' % [ self.phone, self.sms_code ]
     SendSmsConfirmationJob.perform_later(self)
+  end
+
+  def loc_json
+    return { lat: self.latitude, lng: self.longitude }.to_json()
   end
 
   private

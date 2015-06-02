@@ -42,4 +42,16 @@ class UserTest < ActiveSupport::TestCase
 
     assert ability.cannot?(:post_topic, nil)
   end
+
+  test 'should not save invalid lat or lng' do
+    user = FactoryGirl.build(:user, latitude: 'x', longitude: 'y')
+    assert_not user.save
+  end
+
+  test 'should return loc as json' do
+    user = FactoryGirl.create(:user)
+    loc = JSON.parse(user.loc_json())
+    assert_equal user.latitude, loc['lat']
+    assert_equal user.longitude, loc['lng']
+  end
 end

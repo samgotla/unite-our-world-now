@@ -1,5 +1,6 @@
 GEM
   remote: https://rubygems.org/
+  remote: https://rails-assets.org/
   specs:
     actionmailer (4.2.1)
       actionpack (= 4.2.1)
@@ -78,6 +79,7 @@ GEM
       railties (>= 3.0.0)
     faker (1.4.3)
       i18n (~> 0.5)
+    geocoder (1.2.8)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
     haml (4.0.6)
@@ -116,6 +118,7 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.2.1)
       sprockets-rails
+    rails-assets-bluebird (2.9.27)
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
     rails-dom-testing (1.0.6)
@@ -166,8 +169,6 @@ GEM
     tilt (1.4.1)
     timers (4.0.1)
       hitimes
-    turbolinks (2.5.3)
-      coffee-rails
     twilio-ruby (4.1.0)
       builder (>= 2.1.2)
       jwt (~> 1.0)
@@ -196,16 +197,17 @@ DEPENDENCIES
   devise
   factory_girl_rails
   faker
+  geocoder
   haml
   jquery-rails
   mysql
   rails (= 4.2.1)
+  rails-assets-bluebird!
   rails_12factor
   sass-rails (~> 5.0)
   sidekiq
   spring
   sqlite3
-  turbolinks
   twilio-ruby
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
