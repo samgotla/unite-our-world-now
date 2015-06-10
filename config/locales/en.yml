@@ -9,6 +9,8 @@ en:
     invalid_code: 'Invalid verification code.'
     check_for_code: 'Please check your phone for a verification code.'
     unknown_error: 'Unknown error occurred.'
+    forums_created: 'Forums successfully generated.'
+    forums_error: 'There was a problem generating your forums.'
 
   links:
     dashboard: 'Dashboard'

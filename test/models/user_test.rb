@@ -54,4 +54,11 @@ class UserTest < ActiveSupport::TestCase
     assert_equal user.latitude, loc['lat']
     assert_equal user.longitude, loc['lng']
   end
+
+  test 'should update forum id when zip is changed' do
+    user = FactoryGirl.create(:user)
+    Forum.generate(user)
+
+    assert_not_nil user.forum_id
+  end
 end

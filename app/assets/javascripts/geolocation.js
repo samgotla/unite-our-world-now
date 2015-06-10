@@ -33,4 +33,4 @@ var Geolocation = {
     }
 };
 
-$(Geolocation.start);
+// $(Geolocation.start);

@@ -39,6 +39,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
       end
       sign_in resource_name, resource, bypass: true
 
+      generate_forums()
+
       # Send blank JSON response if updating via XHR
       # (for updating location only)
       if request.xhr?
@@ -59,6 +61,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   private
+
+  def generate_forums
+
+    # Only generate forums when zip code is changed
+    if self.resource.previous_changes()[:zip_code] and !self.resource.zip_code.blank?
+
+      # Override flash message if generating forums
+      if Forum.generate(self.resource)
+        flash[:notice] = I18n.t('msg.forums_created')
+      else
+        flash[:alert] = I18n.t('msg.forums_error')
+      end
+    end
+  end
 
   # Use external method since Devise controllers are exempt from
   # authenticate_user!
@@ -95,7 +111,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
       :password_confirmation,
       :current_password,
       :latitude,
-      :longitude
+      :longitude,
+      :zip_code
     )
   end
 end

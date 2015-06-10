@@ -16,14 +16,14 @@ class User < ActiveRecord::Base
   validates :phone, uniqueness: true, presence: true, length: { minimum: 10 }
   validates :latitude, numericality: true, allow_blank: true
   validates :longitude, numericality: true, allow_blank: true
+  validates :zip_code, numericality: { :only_integer => true }, allow_blank: true
+
+  belongs_to :forum
 
   def set_defaults
     if !self.role
       self.role = 'poster'
     end
-
-    self.sms_code = User.confirmation_code()
-    self.sms_confirmed = false
     
     return true
   end
@@ -41,12 +41,27 @@ class User < ActiveRecord::Base
   end
 
   def send_sms_confirmation
+    self.sms_code = User.confirmation_code()
+    self.sms_confirmed = false
+
     logger.debug 'Queuing SMS to %s (code: %s)' % [ self.phone, self.sms_code ]
     SendSmsConfirmationJob.perform_later(self)
   end
 
   def loc_json
     return { lat: self.latitude, lng: self.longitude }.to_json()
+  end
+
+  def all_forums
+    rv = [ self.forum ]
+    f = self.forum.parent
+
+    while f
+      rv << f
+      f = f.parent
+    end
+
+    return rv
   end
 
   private
