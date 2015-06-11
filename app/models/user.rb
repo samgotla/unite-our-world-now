@@ -24,6 +24,8 @@ class User < ActiveRecord::Base
     if !self.role
       self.role = 'poster'
     end
+
+    self.sms_code = User.confirmation_code()
     
     return true
   end
@@ -41,9 +43,6 @@ class User < ActiveRecord::Base
   end
 
   def send_sms_confirmation
-    self.sms_code = User.confirmation_code()
-    self.sms_confirmed = false
-
     logger.debug 'Queuing SMS to %s (code: %s)' % [ self.phone, self.sms_code ]
     SendSmsConfirmationJob.perform_later(self)
   end
