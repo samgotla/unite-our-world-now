@@ -1,6 +1,7 @@
 class ForumsController < ApplicationController
   before_action :authenticate_user!
   before_action :check_verified
+  before_action :check_forum_exists, only: 'index'
 
   check_authorization
   load_and_authorize_resource
@@ -24,6 +25,13 @@ class ForumsController < ApplicationController
   private
   def check_verified
     if cannot? :post_topic, nil, current_user
+      redirect_to edit_user_registration_path
+    end
+  end
+
+  def check_forum_exists
+    if !current_user.forum
+      flash[:alert] = I18n.t('msg.enter_location')
       redirect_to edit_user_registration_path
     end
   end

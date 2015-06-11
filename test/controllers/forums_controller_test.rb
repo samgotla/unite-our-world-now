@@ -41,4 +41,12 @@ class ForumsControllerTest < ActionController::TestCase
     get :children, id: user.forum.parent.id
     assert_select '#forums li', 1
   end
+
+  test 'should redirect if no forums exist' do
+    user = FactoryGirl.create(:user, sms_confirmed: true)
+    sign_in user
+
+    get :index
+    assert_redirected_to edit_user_registration_path
+  end
 end
