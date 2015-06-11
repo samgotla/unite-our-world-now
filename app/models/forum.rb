@@ -16,19 +16,22 @@ class Forum < ActiveRecord::Base
     best = results[0]
     addr_comps = best.data['address_components']
 
+    # Always use full state name
+    state_name = Carmen::Country.named(best.country).subregions.coded(best.state_code)
+
     if addr_comps.has_key?('county')
       county_name = addr_comps['county']
-      county_forum_name = '%s, %s' % [ county_name, best.state_code ]
+      county_forum_name = '%s, %s' % [ county_name, state_name ]
     end
 
-    city_forum_name = '%s, %s' % [ best.city, best.state_code ]
+    city_forum_name = '%s, %s' % [ best.city, state_name ]
 
     Forum.transaction do
 
       # Find or create forums by name
       world_forum = Forum.find_or_create_by(name: 'World')
       country_forum = Forum.find_or_create_by(name: best.country)
-      state_forum = Forum.find_or_create_by(name: best.state_code)
+      state_forum = Forum.find_or_create_by(name: state_name)
 
       # Might not always get a county
       if county_forum_name

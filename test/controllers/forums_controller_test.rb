@@ -23,4 +23,13 @@ class ForumsControllerTest < ActionController::TestCase
     get :index
     assert_redirected_to edit_user_registration_path
   end
+
+  test 'logged in user should see forum title' do
+    user = FactoryGirl.create(:user, sms_confirmed: true)
+    Forum.generate(user)
+    sign_in user
+
+    get :show, id: user.forum_id
+    assert_select 'h3', user.forum.name
+  end
 end

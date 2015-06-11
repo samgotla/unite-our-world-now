@@ -1,0 +1,10 @@
+%h3= forum.name
+
+- if forum.parent
+  .parent
+    %span (parent:
+    %span= link_to forum.parent.name, forum.parent
+    %span )
+
+%p    
+  %i This is a forum stub.

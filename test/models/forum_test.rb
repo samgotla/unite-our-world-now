@@ -55,4 +55,11 @@ class ForumTest < ActiveSupport::TestCase
       end
     end
   end
+
+  test 'should generate forums with full state name' do
+    user = FactoryGirl.create(:user)
+    Forum.generate(user)
+
+    assert_match 'New York', user.forum.name
+  end
 end

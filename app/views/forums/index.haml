@@ -1,4 +1,4 @@
 %h3 Your Forums
 %ul#forums
   - forums.each do |f|
-    %li= f.name
+    %li= link_to f.name, f
