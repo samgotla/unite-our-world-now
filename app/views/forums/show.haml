@@ -5,6 +5,8 @@
     %span (parent:
     %span= link_to forum.parent.name, forum.parent
     %span )
+    
+.children= link_to t('links.children'), children_forum_path(forum)      
 
 %p    
   %i This is a forum stub.

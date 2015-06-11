@@ -3,6 +3,8 @@ class Ability
 
   def initialize(user)
     can :post_topic if user.sms_confirmed
+    
     can :read, Forum
+    can :children, Forum
   end
 end

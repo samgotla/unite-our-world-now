@@ -13,6 +13,14 @@ class ForumsController < ApplicationController
     render 'show', locals: { forum: Forum.find(params[:id]) }
   end
 
+  def children
+    forum = Forum.find(params[:id])
+    render 'children', locals: {
+             forum: forum,
+             children: forum.children
+           }
+  end
+
   private
   def check_verified
     if cannot? :post_topic, nil, current_user

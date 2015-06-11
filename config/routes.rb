@@ -21,10 +21,9 @@ Rails.application.routes.draw do
   get 'about' => 'home#about'
   ###
 
-  # Forums
-  resources :forums, only: [ :index, :show ]
-  # get 'forums' => 'forums#index'
-  # get 'forums/:id' => 'forums#show', as: 'show_forum_path'
-  ###
-  
+  resources :forums, only: [ :index, :show ] do
+    member do
+      get :children
+    end
+  end
 end

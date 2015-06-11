@@ -62,4 +62,11 @@ class ForumTest < ActiveSupport::TestCase
 
     assert_match 'New York', user.forum.name
   end
+
+  test 'should get children' do
+    user = FactoryGirl.create(:user)
+    Forum.generate(user)
+
+    assert_not_empty user.forum.parent.children
+  end
 end

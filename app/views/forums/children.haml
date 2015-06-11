@@ -1,0 +1,7 @@
+%h3
+  %span Children of
+  %span= forum.name
+  
+%ul#forums
+  - children.each do |f|
+    %li= link_to f.name, f

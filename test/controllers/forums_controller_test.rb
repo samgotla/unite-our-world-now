@@ -32,4 +32,13 @@ class ForumsControllerTest < ActionController::TestCase
     get :show, id: user.forum_id
     assert_select 'h3', user.forum.name
   end
+
+  test 'should show children' do
+    user = FactoryGirl.create(:user, sms_confirmed: true)
+    Forum.generate(user)
+    sign_in user
+
+    get :children, id: user.forum.parent.id
+    assert_select '#forums li', 1
+  end
 end
