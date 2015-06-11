@@ -3,26 +3,32 @@ var Geolocation = {
         var lat = location.coords.latitude;
         var lng = location.coords.longitude;
 
-        // Don't update if loc hasn't changed
-        if (user_location.lat == lat && user_location.lng == lng){
-            return;
-        }
+        // When location is retrieved from browser, disable input
+        $('#user_latitude').val(lat);
+        $('#user_longitude').val(lng);
+        $('#user_zip_code')
+            .val('')
+            .prop('disabled', true);
 
-        var url = $('#users_path').attr('href');
-        var obj = { user: {
-            latitude: lat,
-            longitude: lng
-        }};
+        // Display success check button
+        $('#get_location span')
+            .removeClass('glyphicon-map-marker')
+            .addClass('glyphicon-ok');
 
-        $.ajax({
-            url: url,
-            type: 'PUT',
-            contentType: 'application/json',
-            data: JSON.stringify(obj)
-        });
+        $('#get_location')
+            .prop('disabled', true)
+            .removeAttr('title');
     },
 
     error: function(err){
+        $('#get_location span')
+            .removeClass('glyphicon-map-marker')
+            .addClass('glyphicon-alert');
+
+        $('#get_location')
+            .prop('disabled', true)
+            .removeAttr('title');
+
         console.error(err);
     },
 
@@ -33,4 +39,6 @@ var Geolocation = {
     }
 };
 
-// $(Geolocation.start);
+$(function(){
+    $('#get_location').click(Geolocation.start);
+});

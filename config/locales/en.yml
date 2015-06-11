@@ -11,7 +11,7 @@ en:
     unknown_error: 'Unknown error occurred.'
     forums_created: 'Forums successfully generated.'
     forums_error: 'There was a problem generating your forums.'
-    enter_location: 'Please enter a ZIP code to continue.'
+    enter_location: 'Please enter a location to continue.'
 
   links:
     dashboard: 'Dashboard'
@@ -22,6 +22,7 @@ en:
     forums: 'Forums'
     edit_account: 'Edit Your Account'
     children: 'Children'
+    get_location: 'Get Your Current Location'
 
   headers:
     your_approved_posts: 'Your Approved Posts'
@@ -31,4 +32,9 @@ en:
     find_user: 'Search For A User'
     mod_pending_posts: 'Pending Posts In Your Region'
     your_forums: 'Your Forums'
+
+  hints:
+    location_button: '(Click the map marker to get your current location or enter your ZIP code)'
+    location_success: 'Location successfully retrieved'
+    location_error: 'Location error'
     

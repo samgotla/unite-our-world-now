@@ -5,7 +5,7 @@ class ForumsControllerTest < ActionController::TestCase
 
   test 'logged in user should see their forums' do
     user = FactoryGirl.create(:user, sms_confirmed: true)
-    Forum.generate(user)
+    Forum.generate(user, :zip)
     sign_in user
 
     get :index
@@ -26,7 +26,7 @@ class ForumsControllerTest < ActionController::TestCase
 
   test 'logged in user should see forum title' do
     user = FactoryGirl.create(:user, sms_confirmed: true)
-    Forum.generate(user)
+    Forum.generate(user, :zip)
     sign_in user
 
     get :show, id: user.forum_id
@@ -35,7 +35,7 @@ class ForumsControllerTest < ActionController::TestCase
 
   test 'should show children' do
     user = FactoryGirl.create(:user, sms_confirmed: true)
-    Forum.generate(user)
+    Forum.generate(user, :zip)
     sign_in user
 
     get :children, id: user.forum.parent.id

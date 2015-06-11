@@ -23,7 +23,7 @@
         .navbar-header
           = link_to t('links.home'), root_path, { class: 'navbar-brand' }
 
-        %ul.nav.navbar-nav
+        %ul.nav.navbar-nav.navbar-left
           = active_nav_item t('links.about'), about_path
           
           - if user_signed_in?

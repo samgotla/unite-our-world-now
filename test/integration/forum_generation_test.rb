@@ -13,7 +13,7 @@ class ForumGenerationTest < ActionDispatch::IntegrationTest
 
   test 'display forum list after generation' do
     user = FactoryGirl.create(:user, sms_confirmed: true)
-    Forum.generate(user)
+    Forum.generate(user, :zip)
 
     open_session do
       login(user)

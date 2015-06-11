@@ -57,7 +57,7 @@ class UserTest < ActiveSupport::TestCase
 
   test 'should update forum id when zip is changed' do
     user = FactoryGirl.create(:user)
-    Forum.generate(user)
+    Forum.generate(user, :zip)
 
     assert_not_nil user.forum_id
   end

@@ -63,17 +63,30 @@ class Users::RegistrationsController < Devise::RegistrationsController
   private
 
   def generate_forums
+    loc_key = location_key()
 
     # Only generate forums when zip code is changed
-    if self.resource.previous_changes()[:zip_code] and !self.resource.zip_code.blank?
+    if loc_key
 
       # Override flash message if generating forums
-      if Forum.generate(self.resource)
+      if Forum.generate(self.resource, loc_key)
         flash[:notice] = I18n.t('msg.forums_created')
       else
         flash[:alert] = I18n.t('msg.forums_error')
       end
     end
+  end
+
+  def location_key
+    prev = self.resource.previous_changes()
+
+    if prev[:zip_code] and !self.resource.zip_code.blank?
+      return :zip
+    elsif (prev[:latitude] or prev[:longitude]) and !self.resource.latitude.blank?
+      return :coord
+    end
+
+    return nil
   end
 
   # Use external method since Devise controllers are exempt from

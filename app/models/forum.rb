@@ -4,8 +4,14 @@ class Forum < ActiveRecord::Base
   belongs_to :parent, class: Forum, primary_key: 'id', foreign_key: 'parent_id'
   has_many :children, class: Forum, primary_key: 'id', foreign_key: 'parent_id'
 
-  def self.generate(user)
-    results = Geocoder.search(user.zip_code)
+  def self.generate(user, loc_key)
+
+    # Search based on last changed attributes
+    if loc_key == :zip
+      results = Geocoder.search(user.zip_code)
+    else
+      results = Geocoder.search([ user.latitude, user.longitude ])
+    end
 
     if results.blank?
       return false
@@ -18,7 +24,7 @@ class Forum < ActiveRecord::Base
     addr_comps = best.data['address_components']
 
     # Always use full state name
-    state_name = Carmen::Country.named(best.country).subregions.coded(best.state_code)
+    state_name = Carmen::Country.named(best.country).subregions.coded(best.state_code).name
 
     if addr_comps.has_key?('county')
       county_name = addr_comps['county']
@@ -63,7 +69,12 @@ class Forum < ActiveRecord::Base
       
       city_forum.save!
 
-      return user.update(forum: city_forum)
+      return user.update(
+               forum: city_forum,
+               latitude: best.latitude,
+               longitude: best.longitude,
+               zip_code: best.zip
+             )
     end
   end
 end
