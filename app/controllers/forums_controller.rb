@@ -25,7 +25,7 @@ class ForumsController < ApplicationController
 
   def search
     results = []
-    term = params[:term].strip()
+    term = params[:term].strip().gsub('%', '')
 
     if term.length >= Forum::MIN_TERM_LEN
       results = Forum.where('name LIKE ?', "%#{ term }%")
