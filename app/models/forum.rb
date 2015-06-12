@@ -1,4 +1,6 @@
 class Forum < ActiveRecord::Base
+  MIN_TERM_LEN = 3
+
   validates :name, presence: true, uniqueness: true
 
   belongs_to :parent, class: Forum, primary_key: 'id', foreign_key: 'parent_id'

@@ -49,4 +49,31 @@ class ForumsControllerTest < ActionController::TestCase
     get :index
     assert_redirected_to edit_user_registration_path
   end
+
+  test 'should show search results' do
+    user = FactoryGirl.create(:user, sms_confirmed: true)
+    Forum.generate(user, :zip)
+    sign_in user
+
+    get :search, term: 'new'
+    assert_select '#forums li', 3
+  end
+
+  test 'should redirect if term is too short' do
+    user = FactoryGirl.create(:user, sms_confirmed: true)
+    Forum.generate(user, :zip)
+    sign_in user
+
+    get :search, term: 'x'
+    assert_redirected_to forums_path
+  end
+
+  test 'should show no results if none are found' do
+    user = FactoryGirl.create(:user, sms_confirmed: true)
+    Forum.generate(user, :zip)
+    sign_in user
+
+    get :search, term: 'abcdef'
+    assert_select '#forums li', 0
+  end
 end

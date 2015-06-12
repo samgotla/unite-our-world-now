@@ -1,0 +1,6 @@
+%h3= t('headers.search_result') % [ term ]
+%ul#forums
+  - results.each do |f|
+    %li= link_to f.name, f
+
+= paginate results    

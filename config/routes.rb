@@ -22,6 +22,10 @@ Rails.application.routes.draw do
   ###
 
   resources :forums, only: [ :index, :show ] do
+    collection do
+      get :search
+    end
+    
     member do
       get :children
     end

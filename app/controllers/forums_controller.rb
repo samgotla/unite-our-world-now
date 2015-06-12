@@ -16,10 +16,27 @@ class ForumsController < ApplicationController
 
   def children
     forum = Forum.find(params[:id])
+    
     render 'children', locals: {
              forum: forum,
              children: forum.children
            }
+  end
+
+  def search
+    results = []
+
+    if params[:term].length >= Forum::MIN_TERM_LEN
+      results = Forum.where('name LIKE ?', "%#{ params[:term] }%")
+                .order(:name).page(params[:page])
+
+      render 'search', locals: {
+               results: results,
+               term: params[:term]
+             }
+    else
+      redirect_to forums_path
+    end
   end
 
   private

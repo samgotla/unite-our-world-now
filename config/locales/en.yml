@@ -1,40 +1,42 @@
 en:
-  title: 'Unite Our World Now'
+  title: Unite Our World Now
   
   msg:
-    please_confirm: 'Please confirm your account.'
-    already_confirmed: 'User already confirmed.'
-    invalid_phone: 'Invalid phone number or confirmation token.'
-    confirmed: 'Registration confirmed.'
-    invalid_code: 'Invalid verification code.'
-    check_for_code: 'Please check your phone for a verification code.'
-    unknown_error: 'Unknown error occurred.'
-    forums_created: 'Forums successfully generated.'
-    forums_error: 'There was a problem generating your forums.'
-    enter_location: 'Please enter a location to continue.'
+    please_confirm: Please confirm your account.
+    already_confirmed: User already confirmed.
+    invalid_phone: Invalid phone number or confirmation token.
+    confirmed: Registration confirmed.
+    invalid_code: Invalid verification code.
+    check_for_code: Please check your phone for a verification code.
+    unknown_error: Unknown error occurred.
+    forums_created: Forums successfully generated.
+    forums_error: There was a problem generating your forums.
+    enter_location: Please enter a location to continue.
 
   links:
-    dashboard: 'Dashboard'
-    log_in: 'Log In'
-    log_out: 'Log Out'
-    home: 'Home'
-    about: 'About'
-    forums: 'Forums'
-    edit_account: 'Edit Your Account'
-    children: 'Children'
-    get_location: 'Get Your Current Location'
+    dashboard: Dashboard
+    log_in: Log In
+    log_out: Log Out
+    home: Home
+    about: About
+    forums: Forums
+    edit_account: Edit Your Account
+    children: Children
+    get_location: Get Your Current Location
 
   headers:
-    your_approved_posts: 'Your Approved Posts'
-    your_pending_posts: 'Your Pending Posts'
-    pending_users: 'Users Awaiting Verification'
-    moderators_by_region: 'Moderators'
-    find_user: 'Search For A User'
-    mod_pending_posts: 'Pending Posts In Your Region'
-    your_forums: 'Your Forums'
+    your_approved_posts: Your Approved Posts
+    your_pending_posts: Your Pending Posts
+    pending_users: Users Awaiting Verification
+    moderators_by_region: Moderators
+    find_user: Search For A User
+    mod_pending_posts: Pending Posts In Your Region
+    your_forums: Your Forums
+    search: Search
+    search_result: 'Search for "%s"'
 
   hints:
-    location_button: '(Click the map marker to get your current location or enter your ZIP code)'
-    location_success: 'Location successfully retrieved'
-    location_error: 'Location error'
+    location_button: (Click the map marker to get your current location or enter your ZIP code)
+    location_success: Location successfully retrieved
+    location_error: Location error
     

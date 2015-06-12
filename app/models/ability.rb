@@ -6,5 +6,6 @@ class Ability
     
     can :read, Forum
     can :children, Forum
+    can :search, Forum
   end
 end
