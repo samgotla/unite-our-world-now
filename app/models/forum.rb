@@ -4,7 +4,9 @@ class Forum < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
 
   belongs_to :parent, class: Forum, primary_key: 'id', foreign_key: 'parent_id'
-  has_many :children, class: Forum, primary_key: 'id', foreign_key: 'parent_id'
+  has_many :children, -> { order 'name asc' },
+           class: Forum, primary_key: 'id', foreign_key: 'parent_id'
+           
 
   def self.generate(user, loc_key)
 
