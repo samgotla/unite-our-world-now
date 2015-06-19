@@ -40,5 +40,12 @@ var Geolocation = {
 };
 
 $(function(){
-    $('#get_location').click(Geolocation.start);
+    if (navigator.geolocation){
+        $('#get_location').click(Geolocation.start);
+    }
+    else {
+        $('#get_location')
+            .prop('disabled', true)
+            .removeAttr('title');
+    }
 });
