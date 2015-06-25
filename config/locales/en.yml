@@ -23,6 +23,7 @@ en:
     edit_account: Edit Your Account
     children: Children
     get_location: Get Your Current Location
+    create_post: Create A New Post
 
   headers:
     your_approved_posts: Your Approved Posts

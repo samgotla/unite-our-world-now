@@ -29,5 +29,7 @@ Rails.application.routes.draw do
     member do
       get :children
     end
+
+    resources :posts
   end
 end

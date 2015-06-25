@@ -6,7 +6,7 @@ class Forum < ActiveRecord::Base
   belongs_to :parent, class: Forum, primary_key: 'id', foreign_key: 'parent_id'
   has_many :children, -> { order 'name asc' },
            class: Forum, primary_key: 'id', foreign_key: 'parent_id'
-           
+  has_many :posts, -> { order 'updated_at desc' }  
 
   def self.generate(user, loc_key)
 

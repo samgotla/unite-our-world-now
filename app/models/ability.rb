@@ -7,5 +7,8 @@ class Ability
     can :read, Forum
     can :children, Forum
     can :search, Forum
+
+    can :read, Post
+    can :create, Post
   end
 end

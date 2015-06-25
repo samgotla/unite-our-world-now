@@ -45,4 +45,11 @@ class ForumTest < ActiveSupport::TestCase
 
     assert_not_empty user.forum.parent.children
   end
+
+  test 'should get posts' do
+    forum = FactoryGirl.create(:forum)
+    post = FactoryGirl.create(:post, forum_id: forum.id)
+
+    assert_equal forum.posts.length, 1
+  end
 end

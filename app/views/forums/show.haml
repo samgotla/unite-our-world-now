@@ -6,7 +6,11 @@
     %span= link_to forum.parent.name, forum.parent
     %span )
     
-.children= link_to t('links.children'), children_forum_path(forum)      
+    .children= link_to t('links.children'), children_forum_path(forum)
 
-%p    
-  %i This is a forum stub.
+- if can? :post_topic, nil, current_user
+  = link_to t('links.create_post'), new_forum_post_path(forum), class: 'btn btn-primary'
+
+%ul#posts  
+  - forum.posts.each do |post|
+    %li= link_to post.subject, forum_post_path(forum, post)

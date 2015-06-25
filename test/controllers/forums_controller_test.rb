@@ -76,4 +76,13 @@ class ForumsControllerTest < ActionController::TestCase
     get :search, term: 'abcdef'
     assert_select '#forums li', 0
   end
+
+  test 'should see forum posts' do
+    user = create_user_with_post
+    forum = Forum.first
+
+    get :show, id: forum.id
+
+    assert_select '#posts li', 1
+  end
 end

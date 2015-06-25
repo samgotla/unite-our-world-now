@@ -10,8 +10,14 @@ class ApplicationController < ActionController::Base
     http_basic_authenticate_with name: ENV['AUTH_USER'], password: ENV['AUTH_PASS']
   end
 
-  private
+  protected
+  def check_verified
+    if cannot? :post_topic, nil, current_user
+      redirect_to edit_user_registration_path
+    end
+  end
 
+  private
   def check_sms_confirmed
     if user_signed_in? and current_user.poster? and !current_user.sms_confirmed
       flash[:alert] = I18n.t('msg.please_confirm')

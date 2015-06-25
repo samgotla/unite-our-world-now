@@ -27,4 +27,20 @@ class ActiveSupport::TestCase
 
     Geocoder::Lookup::Test.set_default_stub([])
   end
+
+  def create_ready_user
+    user = FactoryGirl.create(:user, sms_confirmed: true)
+    Forum.generate(user, :zip)
+    sign_in user
+
+    return user
+  end
+
+  def create_user_with_post
+    user = create_ready_user
+    forum = Forum.first
+    post = FactoryGirl.create(:post, user: user, forum: forum)
+
+    return user
+  end
 end

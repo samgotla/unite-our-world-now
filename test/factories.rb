@@ -8,4 +8,15 @@ FactoryGirl.define do
     longitude 12.3456
     zip_code '12345'
   end
+
+  factory :post do
+    subject { Faker::Lorem.sentence }
+    body { Faker::Lorem.sentence }
+    forum_id 999
+    user_id 999
+  end
+
+  factory :forum do
+    name { Faker::Address.state }
+  end
 end

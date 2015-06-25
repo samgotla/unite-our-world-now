@@ -41,12 +41,6 @@ class ForumsController < ApplicationController
   end
 
   private
-  def check_verified
-    if cannot? :post_topic, nil, current_user
-      redirect_to edit_user_registration_path
-    end
-  end
-
   def check_forum_exists
     if !current_user.forum
       flash[:alert] = I18n.t('msg.enter_location')
