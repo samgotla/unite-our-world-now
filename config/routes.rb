@@ -30,6 +30,8 @@ Rails.application.routes.draw do
       get :children
     end
 
-    resources :posts
+    resources :posts, only: [ :index, :show, :new, :create ] do
+      resources :comments, only: [ :create ]
+    end
   end
 end

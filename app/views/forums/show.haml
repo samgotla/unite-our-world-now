@@ -13,4 +13,6 @@
 
 %ul#posts  
   - forum.posts.each do |post|
-    %li= link_to post.subject, forum_post_path(forum, post)
+    .post
+      .row.post-date= post.updated_at
+      .row= link_to post.subject, forum_post_path(forum, post)

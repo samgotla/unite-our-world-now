@@ -12,6 +12,8 @@ en:
     forums_created: Forums successfully generated.
     forums_error: There was a problem generating your forums.
     enter_location: Please enter a location to continue.
+    comment_error: Error saving comment.
+    comment_saved: Comment saved.
 
   links:
     dashboard: Dashboard

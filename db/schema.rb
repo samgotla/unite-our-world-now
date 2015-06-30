@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150625180531) do
+ActiveRecord::Schema.define(version: 20150630191404) do
+
+  create_table "comments", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "post_id"
+    t.string   "body"
+    t.boolean  "approved",   default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "forums", force: :cascade do |t|
     t.string   "name"

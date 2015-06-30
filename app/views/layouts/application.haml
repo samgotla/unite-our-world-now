@@ -13,11 +13,14 @@
     
   %body
     .container-fluid
-      - if notice
-        %p.alert.alert-info= notice
+      - if flash[:notice]
+        %p.alert.alert-info= flash[:notice]
 
-      - if alert
-        %p.alert.alert-warning= alert
+      - if flash[:alert]
+        %p.alert.alert-warning= flash[:alert]
+
+      - if flash[:error]
+        %p.alert.alert-danger= flash[:error]
 
       %nav.navbar.navbar-default
         .navbar-header

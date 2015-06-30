@@ -43,4 +43,12 @@ class ActiveSupport::TestCase
 
     return user
   end
+
+  def create_user_with_comment
+    user = create_user_with_post
+    post = Post.first
+    comment = FactoryGirl.create(:comment, user: user, post: post)
+
+    return user
+  end
 end

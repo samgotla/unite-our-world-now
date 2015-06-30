@@ -1,5 +1,17 @@
 %h3= post.subject
 %p= post.body
 
+- if can? :post_topic, nil, current_user
+  = form_for [ post.forum, post, Comment.new ] do |f|
+    .form-group
+      = f.label :body
+      = f.text_area :body, class: 'form-control'
+
+    .form-group
+      = f.submit class: 'btn btn-primary'
+
 %ul#comments
-  %li TODO: comments here
+  - post.comments.each do |c|
+    .comment
+      .row.post-date= c.updated_at
+      .row= c.body

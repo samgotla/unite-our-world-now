@@ -10,5 +10,8 @@ class Ability
 
     can :read, Post
     can :create, Post
+
+    can :read, Comment
+    can :create, Comment
   end
 end

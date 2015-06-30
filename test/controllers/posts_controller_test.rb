@@ -32,4 +32,13 @@ class PostsControllerTest < ActionController::TestCase
 
     assert_equal forum.posts.length, 0
   end
+
+  test 'should see comments' do
+    user = create_user_with_comment
+    comment = user.comments.first
+
+    get :show, forum_id: Forum.first.id, id: user.posts.first.id
+
+    assert_select '#comments .comment', 1
+  end
 end

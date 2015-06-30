@@ -19,4 +19,10 @@ FactoryGirl.define do
   factory :forum do
     name { Faker::Address.state }
   end
+
+  factory :comment do
+    body { Faker::Lorem.sentence }
+    post_id 999
+    user_id 999
+  end
 end

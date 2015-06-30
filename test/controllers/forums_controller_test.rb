@@ -83,6 +83,6 @@ class ForumsControllerTest < ActionController::TestCase
 
     get :show, id: forum.id
 
-    assert_select '#posts li', 1
+    assert_select '#posts .post', 1
   end
 end

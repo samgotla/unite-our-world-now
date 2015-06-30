@@ -19,6 +19,8 @@ class User < ActiveRecord::Base
   validates :zip_code, numericality: { :only_integer => true }, allow_blank: true
 
   belongs_to :forum
+  has_many :posts, -> { order 'updated_at desc' }
+  has_many :comments, -> { order 'updated_at desc' }
 
   def set_defaults
     if !self.role
