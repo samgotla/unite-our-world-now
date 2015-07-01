@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     
     member do
       get :children
+      get :all_posts
     end
 
     resources :posts, only: [ :index, :show, :new, :create ] do

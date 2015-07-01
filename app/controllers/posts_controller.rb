@@ -34,7 +34,7 @@ class PostsController < ApplicationController
     post.user = current_user
 
     if post.save
-      redirect_to forum_path(forum)
+      redirect_to forum_post_path(forum, post)
     else
       render :new, locals: {
                forum: Forum.find(params[:forum_id]),

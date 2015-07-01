@@ -61,4 +61,14 @@ class UserTest < ActiveSupport::TestCase
 
     assert_not_nil user.forum_id
   end
+
+  test 'should get approved posts' do
+    user = create_user_with_approved_post(login=false)
+    assert_equal user.approved_posts.length, 1
+  end
+
+  test 'should get pending posts' do
+    user = create_user_with_post(login=false)
+    assert_equal user.pending_posts.length, 1
+  end
 end

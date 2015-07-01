@@ -8,11 +8,17 @@
     
     .children= link_to t('links.children'), children_forum_path(forum)
 
-- if can? :post_topic, nil, current_user
-  = link_to t('links.create_post'), new_forum_post_path(forum), class: 'btn btn-primary'
+%div    
+  - if can? :post_topic, nil, current_user
+    = link_to t('links.create_post'), new_forum_post_path(forum), class: 'btn btn-primary'
 
+  - if params[:action] == 'all_posts'
+    = link_to t('links.hide_pending_posts'), forum_path(forum), class: 'btn btn-default'
+  - else
+    = link_to t('links.show_all_posts'), all_posts_forum_path(forum), class: 'btn btn-default'
+  
 %ul#posts  
-  - forum.posts.each do |post|
+  - posts.each do |post|
     .post
       .row.post-date= post.updated_at
       .row= link_to post.subject, forum_post_path(forum, post)

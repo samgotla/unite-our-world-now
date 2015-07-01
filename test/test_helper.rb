@@ -28,24 +28,35 @@ class ActiveSupport::TestCase
     Geocoder::Lookup::Test.set_default_stub([])
   end
 
-  def create_ready_user
+  def create_ready_user(login=true)
     user = FactoryGirl.create(:user, sms_confirmed: true)
     Forum.generate(user, :zip)
-    sign_in user
+
+    if login
+      sign_in user
+    end
 
     return user
   end
 
-  def create_user_with_post
-    user = create_ready_user
+  def create_user_with_post(*args)
+    user = create_ready_user(*args)
     forum = Forum.first
     post = FactoryGirl.create(:post, user: user, forum: forum)
 
     return user
   end
 
-  def create_user_with_comment
-    user = create_user_with_post
+  def create_user_with_approved_post(*args)
+    user = create_ready_user(*args)
+    forum = Forum.first
+    post = FactoryGirl.create(:post, user: user, forum: forum, approved: true)
+
+    return user
+  end
+
+  def create_user_with_comment(*args)
+    user = create_user_with_post(*args)
     post = Post.first
     comment = FactoryGirl.create(:comment, user: user, post: post)
 

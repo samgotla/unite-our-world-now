@@ -20,6 +20,12 @@ class User < ActiveRecord::Base
 
   belongs_to :forum
   has_many :posts, -> { order 'updated_at desc' }
+  has_many :approved_posts, -> {
+    where(approved: true).order('updated_at desc')
+  }, class: Post
+  has_many :pending_posts, -> {
+    where(approved: false).order('updated_at desc')
+  }, class: Post
   has_many :comments, -> { order 'updated_at desc' }
 
   def set_defaults

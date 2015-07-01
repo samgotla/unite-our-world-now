@@ -46,10 +46,24 @@ class ForumTest < ActiveSupport::TestCase
     assert_not_empty user.forum.parent.children
   end
 
-  test 'should get posts' do
+  test 'should get all posts' do
     forum = FactoryGirl.create(:forum)
     post = FactoryGirl.create(:post, forum_id: forum.id)
 
     assert_equal forum.posts.length, 1
+  end
+
+  test 'should get approved posts' do
+    forum = FactoryGirl.create(:forum)
+    post = FactoryGirl.create(:post, forum_id: forum.id, approved: true)
+
+    assert_equal forum.approved_posts.length, 1
+  end
+
+  test 'should get pending posts' do
+    forum = FactoryGirl.create(:forum)
+    post = FactoryGirl.create(:post, forum_id: forum.id)
+
+    assert_equal forum.pending_posts.length, 1
   end
 end

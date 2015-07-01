@@ -77,8 +77,17 @@ class ForumsControllerTest < ActionController::TestCase
     assert_select '#forums li', 0
   end
 
-  test 'should see forum posts' do
+  test 'should see all forum posts' do
     user = create_user_with_post
+    forum = Forum.first
+
+    get :all_posts, id: forum.id
+
+    assert_select '#posts .post', 1
+  end
+
+  test 'should see approved posts' do
+    user = create_user_with_approved_post
     forum = Forum.first
 
     get :show, id: forum.id

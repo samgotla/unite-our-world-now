@@ -11,7 +11,21 @@ class ForumsController < ApplicationController
   end
 
   def show
-    render 'show', locals: { forum: Forum.find(params[:id]) }
+    forum = Forum.find(params[:id])
+
+    render 'show', locals: {
+             forum: forum,
+             posts: forum.approved_posts
+           }
+  end
+
+  def all_posts
+    forum = Forum.find(params[:id])
+
+    render 'show', locals: {
+             forum: forum,
+             posts: forum.posts
+           }
   end
 
   def children

@@ -16,7 +16,7 @@ class PostsControllerTest < ActionController::TestCase
 
     assert_equal forum.posts.length, 1
     assert_equal first_post.user, user
-    assert_redirected_to forum_path(forum)
+    assert_redirected_to forum_post_path(forum, first_post)
   end
 
   test 'unverified user should not be able to create a post' do

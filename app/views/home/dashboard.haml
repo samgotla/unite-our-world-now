@@ -1,10 +1,14 @@
 = link_to t('links.edit_account'), edit_user_registration_path, class: 'btn btn-default'
 
 %h3= t('headers.your_approved_posts')
-%em Links to user's approved posts
+%ul#approved_posts
+  - current_user.approved_posts.each do |post|
+    %li= link_to post.subject, forum_post_path(post.forum, post)
 
 %h3= t('headers.your_pending_posts')
-%em Links to user's unapproved posts
+%ul#pending_posts
+  - current_user.pending_posts.each do |post|
+    %li= link_to post.subject, forum_post_path(post.forum, post)
 
 - if current_user.admin?
   %h3= t('headers.pending_users')
@@ -19,4 +23,3 @@
 - if current_user.moderator?
   %h3= t('headers.mod_pending_posts')
   %em Pending posts in moderator's region
-

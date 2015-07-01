@@ -47,4 +47,18 @@ class HomeControllerTest < ActionController::TestCase
     r = get :dashboard
     assert_select 'li.active a[href=?]', about_path, false
   end
+
+  test 'should show approved posts' do
+    user = create_user_with_approved_post
+
+    get :dashboard
+    assert_select '#approved_posts li', 1
+  end
+
+  test 'should show pending posts' do
+    user = create_user_with_post
+
+    get :dashboard
+    assert_select '#pending_posts li', 1
+  end
 end

@@ -6,7 +6,11 @@ class Forum < ActiveRecord::Base
   belongs_to :parent, class: Forum, primary_key: 'id', foreign_key: 'parent_id'
   has_many :children, -> { order 'name asc' },
            class: Forum, primary_key: 'id', foreign_key: 'parent_id'
-  has_many :posts, -> { order 'updated_at desc' }  
+  has_many :posts, -> { order 'updated_at desc' }
+  has_many :approved_posts, -> {
+    where(approved: true).order('updated_at desc') }, class: Post
+  has_many :pending_posts, -> {
+    where(approved: false).order('updated_at desc') }, class: Post
 
   def self.generate(user, loc_key)
 
