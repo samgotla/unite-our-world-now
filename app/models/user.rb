@@ -28,6 +28,8 @@ class User < ActiveRecord::Base
   }, class: Post
   has_many :comments, -> { order 'updated_at desc' }
 
+  scope :pending, -> { where(sms_confirmed: false, role: 'poster') }
+
   def set_defaults
     if !self.role
       self.role = 'poster'

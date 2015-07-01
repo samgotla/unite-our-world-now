@@ -61,4 +61,23 @@ class HomeControllerTest < ActionController::TestCase
     get :dashboard
     assert_select '#pending_posts li', 1
   end
+
+  test 'admin should see unverified users' do
+    admin = FactoryGirl.create(:user, role: 'admin')
+    user = FactoryGirl.create(:user)
+    
+    sign_in admin
+
+    get :dashboard
+
+    assert_select '#pending_users li', 1
+  end
+
+  test 'non-admin should not see unverified users' do
+    user = create_ready_user
+
+    get :dashboard
+
+    assert_select '#pending_users', 0
+  end
 end

@@ -2,7 +2,9 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    can :post_topic if user.sms_confirmed
+    if user.sms_confirmed or user.admin?
+      can :post_topic
+    end
     
     can :read, Forum
     can :children, Forum

@@ -12,7 +12,9 @@
 
 - if current_user.admin?
   %h3= t('headers.pending_users')
-  %em List of users awaiting SMS verification
+  %ul#pending_users
+    - User.pending.each do |user|
+      %li= user.email
 
   %h3= t('headers.moderators_by_region')
   %em List of moderators grouped by region (?)
