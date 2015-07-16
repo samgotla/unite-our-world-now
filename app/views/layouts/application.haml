@@ -31,10 +31,13 @@
           
           - if user_signed_in?
             = active_nav_item t('links.forums'), forums_path
-            = active_nav_item t('links.dashboard'), dashboard_path
             %li= link_to t('links.log_out'), destroy_user_session_path, method: 'delete'
           - else
             = active_nav_item t('links.log_in'), new_user_session_path
+
+        - if user_signed_in?
+          %ul.nav.navbar-nav.navbar-right
+            %li= link_to current_user.email, dashboard_path            
 
       #content
         = yield
