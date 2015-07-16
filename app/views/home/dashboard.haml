@@ -19,8 +19,18 @@
   %h3= t('headers.moderators_by_region')
   %em List of moderators grouped by region (?)
 
+- if current_user.admin? or current_user.moderator?
   %h3= t('headers.find_user')
   %em Find a user by phone or email (for manual verification, mod promotion, banning, etc.)
+
+  %form#user_search_form{ action: user_search_path, method: 'get' }      
+    .form-group
+      .input-group
+        = text_field_tag :term, nil, class: 'form-control'
+        
+        %span.input-group-btn
+          %button.btn.btn-default
+            %span.glyphicon.glyphicon-search
 
 - if current_user.moderator?
   %h3= t('headers.mod_pending_posts')

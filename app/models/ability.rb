@@ -16,5 +16,9 @@ class Ability
 
     can :read, Comment
     can :create, Comment
+
+    if user.admin? or user.moderator?
+      can :search, User
+    end
   end
 end

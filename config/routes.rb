@@ -9,10 +9,17 @@ Rails.application.routes.draw do
       post 'verify_code' => 'users/registrations#verify_code'
     end
   end
+
   
   devise_for :users, controllers: {
                registrations: 'users/registrations'
              }
+  ###
+
+  # Admin
+  scope '/admin' do
+    get 'user_search' => 'admin#user_search'
+  end
   ###
 
   # Home

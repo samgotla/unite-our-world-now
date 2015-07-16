@@ -26,6 +26,9 @@ en:
     children: Children
     get_location: Get Your Current Location
     create_post: Create A New Post
+    promote: Promote To Moderator
+    demote: Revoke Moderator Status
+    verify: Verify User
 
   headers:
     your_approved_posts: Your Approved Posts
@@ -42,4 +45,9 @@ en:
     location_button: (Click the map marker to get your current location or enter your ZIP code)
     location_success: Location successfully retrieved
     location_error: Location error
+
+  labels:
+    poster: POSTER
+    moderator: MODERATOR
+    admin: ADMIN
     
