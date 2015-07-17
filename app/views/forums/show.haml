@@ -9,7 +9,7 @@
     .children= link_to t('links.children'), children_forum_path(forum)
 
 %div    
-  - if can? :post_topic, nil, current_user
+  - if can? :create, Post, current_user
     = link_to t('links.create_post'), new_forum_post_path(forum), class: 'btn btn-primary'
 
   - if params[:action] == 'all_posts'
@@ -17,8 +17,11 @@
   - else
     = link_to t('links.show_all_posts'), all_posts_forum_path(forum), class: 'btn btn-default'
   
-%ul#posts  
+#posts  
   - posts.each do |post|
-    .post
-      .row.post-date= post.updated_at
-      .row= link_to post.subject, forum_post_path(forum, post)
+    .post.row
+      .col-md-1= render partial: 'posts/vote_block', locals: { forum: forum, post: post }
+
+      .col-md-11
+        .row.post-date= post.updated_at
+        .row= link_to post.subject, forum_post_path(forum, post)

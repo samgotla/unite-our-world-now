@@ -24,4 +24,32 @@ class PostTest < ActiveSupport::TestCase
     p.save
     assert_nil p.id
   end
+
+  test 'should get comments' do
+    user = create_user_with_comment(login=false)
+    post = Post.first
+
+    assert_equal post.comments.length, 1
+  end
+
+  test 'should get votes' do
+    user = create_user_with_post_vote(login=false)
+    post = Post.first
+
+    assert_equal post.votes.length, 1
+  end
+
+  test 'should calculate correct score' do
+    user = create_user_with_post_vote(login=false)
+    post = Post.first
+
+    assert_equal post.score, 1
+  end
+
+  test 'should return correct vote css class' do
+    user = create_user_with_post_vote(login=false)
+    post = Post.first
+
+    assert_equal post.vote_class(user, :up), 'voted'
+  end
 end

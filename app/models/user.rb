@@ -27,6 +27,9 @@ class User < ActiveRecord::Base
     where(approved: false).order('updated_at desc')
   }, class: Post
   has_many :comments, -> { order 'updated_at desc' }
+  has_many :votes
+  has_many :post_votes, -> { where(votable_type: 'Post') }, class: Vote
+  has_many :comment_votes, -> { where(votable_type: 'Comment') }, class: Vote
 
   scope :pending, -> { where(sms_confirmed: false, role: 'poster') }
 

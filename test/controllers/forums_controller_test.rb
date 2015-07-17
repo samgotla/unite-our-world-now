@@ -94,4 +94,13 @@ class ForumsControllerTest < ActionController::TestCase
 
     assert_select '#posts .post', 1
   end
+
+  test 'should see arrow marked as voted on forum page' do
+    user = create_user_with_post_vote
+    post1 = Post.first
+
+    get :all_posts, id: post1.forum.id
+
+    assert_select 'a.vote.voted'
+  end
 end

@@ -4,6 +4,9 @@ class Ability
   def initialize(user)
     if user.sms_confirmed or user.admin?
       can :post_topic
+      can :create, Post
+      can :upvote, Post
+      can :downvote, Post
     end
     
     can :read, Forum
@@ -11,8 +14,7 @@ class Ability
     can :search, Forum
     can :all_posts, Forum
 
-    can :read, Post
-    can :create, Post
+    can :read, Post    
 
     can :read, Comment
     can :create, Comment

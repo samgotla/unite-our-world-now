@@ -71,4 +71,14 @@ class UserTest < ActiveSupport::TestCase
     user = create_user_with_post(login=false)
     assert_equal user.pending_posts.length, 1
   end
+
+  test 'should get post votes' do
+    user = create_user_with_post_vote(login=false)
+    assert_equal user.post_votes.length, 1
+  end
+
+  test 'should get comment votes' do
+    user = create_user_with_comment_vote(login=false)
+    assert_equal user.comment_votes.length, 1
+  end
 end

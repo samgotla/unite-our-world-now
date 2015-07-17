@@ -6,6 +6,8 @@ class PostsController < ApplicationController
   load_and_authorize_resource :forum
   load_and_authorize_resource :post, through: 'forum'
 
+  protect_from_forgery except: [ :upvote, :downvote ]
+
   def new
     render :new, locals: {
              forum: Forum.find(params[:forum_id]),
@@ -44,6 +46,32 @@ class PostsController < ApplicationController
   end
 
   def update
+  end
+
+  def upvote
+    post = Post.find(params[:post_id])
+    vote = Vote.find_by(user: current_user, votable: post)
+
+    if vote
+      vote.update(value: 1)
+    else
+      vote = Vote.create(user: current_user, votable: post, value: 1)
+    end
+
+    render json: { score: post.score(), value: vote.value }
+  end
+
+  def downvote
+    post = Post.find(params[:post_id])
+    vote = Vote.find_by(user: current_user, votable: post)
+
+    if vote
+      vote.update(value: -1)
+    else
+      vote = Vote.create(user: current_user, votable: post, value: -1)
+    end
+
+    render json: { score: post.score(), value: vote.value }
   end
 
   private

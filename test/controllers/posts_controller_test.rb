@@ -41,4 +41,50 @@ class PostsControllerTest < ActionController::TestCase
 
     assert_select '#comments .comment', 1
   end
+
+  test 'verified user should be able to upvote post' do
+    user = create_user_with_post
+    post1 = Post.first
+
+    post :upvote, forum_id: post1.forum.id, post_id: post1.id
+
+    assert_equal post1.score, 1
+  end
+
+  test 'verified user should be able to downvote post' do
+    user = create_user_with_post
+    post1 = Post.first
+
+    post :downvote, forum_id: post1.forum.id, post_id: post1.id
+
+    assert_equal post1.score, -1
+  end
+
+  test 'unverified user should not be able to vote on post' do
+    user = create_user_with_post
+    user.update(sms_confirmed: false)
+    post1 = Post.first
+
+    post :upvote, forum_id: post1.forum.id, post_id: post1.id
+
+    assert_equal post1.score, 0
+  end
+
+  test 'anonymous user should not be able to vote on post' do
+    user = create_user_with_post(login=false)
+    post1 = Post.first
+
+    post :upvote, forum_id: post1.forum.id, post_id: post1.id
+
+    assert_equal post1.score, 0
+  end
+
+  test 'should see arrow marked as voted on post page' do
+    user = create_user_with_post_vote
+    post1 = Post.first
+
+    get :show, forum_id: post1.forum.id, id: post1.id
+
+    assert_select 'a.vote.voted'
+  end
 end

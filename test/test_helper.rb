@@ -62,4 +62,20 @@ class ActiveSupport::TestCase
 
     return user
   end
+
+  def create_user_with_post_vote(*args)
+    user = create_user_with_post(*args)
+    post = Post.first
+    vote = FactoryGirl.create(:vote, user: user, votable: post)
+
+    return user
+  end
+
+  def create_user_with_comment_vote(*args)
+    user = create_user_with_comment(*args)
+    comment = Comment.first
+    vote = FactoryGirl.create(:vote, user: user, votable: comment)
+
+    return user
+  end
 end

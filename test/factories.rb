@@ -1,4 +1,11 @@
 FactoryGirl.define do
+  factory :vote do
+    user_id 1
+    votable_id 1
+    value 1
+    votable_type 'Post'
+  end
+
   factory :user do
     email { Faker::Internet.email }
     phone { Faker::PhoneNumber::cell_phone }
