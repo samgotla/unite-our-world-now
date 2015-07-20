@@ -20,22 +20,22 @@
           
       .col-md-4
         - if can? :verify, User and !user.sms_confirmed
-          %a.btn.btn-sm.btn-primary{ href: admin_verify_path(user),
+          %a.verify.btn.btn-sm.btn-primary{ href: admin_verify_path(user),
                                     title: t('links.verify'), 'data-method': 'put' }
             %span.glyphicon.glyphicon-ok
         
-        - if can? :promote, User and user.poster?
-          %a.btn.btn-sm.btn-primary{ href: admin_promote_path(user),
+        - if can? :promote, User and user.poster? and user.sms_confirmed
+          %a.promote.btn.btn-sm.btn-primary{ href: admin_promote_path(user),
                                     title: t('links.promote'), 'data-method': 'put' }
             %span.glyphicon.glyphicon-star
 
-        - if can? :demote, User and user.moderator?
-          %a.btn.btn-sm.btn-danger{ href: admin_demote_path(user),
+        - if can? :demote, User and user.moderator? and user.sms_confirmed
+          %a.demote.btn.btn-sm.btn-danger{ href: admin_demote_path(user),
                                    title: t('links.demote'), 'data-method': 'put' }
             %span.glyphicon.glyphicon-star-empty
 
         - if can? :delete, User and user != current_user
-          %a.btn.btn-sm.btn-danger{ href: admin_destroy_user_path(user),
+          %a.delete.btn.btn-sm.btn-danger{ href: admin_destroy_user_path(user),
                                    title: t('links.delete_user'), 'data-method': 'delete' }
             %span.glyphicon.glyphicon-trash
           

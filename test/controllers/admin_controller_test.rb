@@ -98,4 +98,44 @@ class AdminControllerTest < ActionController::TestCase
     user = User.find_by(role: 'poster')
     assert_nil user
   end
+
+  test 'unconfirmed user row should not show promote button' do
+    admin = FactoryGirl.create(:user, role: 'admin')
+    user = FactoryGirl.create(:user)
+    sign_in admin
+
+    get :user_search
+
+    assert_select '#users .row a.promote', 0
+  end
+
+  test 'should see delete button for user' do
+    admin = FactoryGirl.create(:user, role: 'admin')
+    user = FactoryGirl.create(:user)
+    sign_in admin
+
+    get :user_search
+
+    assert_select '#users .row a.delete', 1
+  end
+
+  test 'should see promote button for verified user' do
+    admin = FactoryGirl.create(:user, role: 'admin')
+    user = FactoryGirl.create(:user, sms_confirmed: true)
+    sign_in admin
+
+    get :user_search
+
+    assert_select '#users .row a.promote', 1
+  end
+
+  test 'should see demote button for moderator' do
+    admin = FactoryGirl.create(:user, role: 'admin')
+    user = FactoryGirl.create(:user, role: 'moderator', sms_confirmed: true)
+    sign_in admin
+
+    get :user_search
+
+    assert_select '#users .row a.demote', 1
+  end
 end
