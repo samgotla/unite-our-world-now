@@ -5,8 +5,8 @@ $(function(){
         $.post(
             $el.attr('href'),
             function(data, status, xhr){
-                $el.parents('.row').siblings().find('.vote').removeClass('voted');
-                $el.parents('.row').siblings('.score').html(data.score);
+                $el.parents('.post').find('.vote').removeClass('voted');
+                $el.parents('.post').find('.score').html(data.score);
                 $el.addClass('voted').blur();
             });
 
