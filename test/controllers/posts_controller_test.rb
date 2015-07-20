@@ -46,8 +46,12 @@ class PostsControllerTest < ActionController::TestCase
     user = create_user_with_post
     post1 = Post.first
 
-    post :upvote, forum_id: post1.forum.id, post_id: post1.id
+    # MiniTest allows wrong verb? (but this fails in the real world)
+    put :upvote, forum_id: post1.forum.id, post_id: post1.id
 
+    data = JSON.parse(@response.body)
+
+    assert_equal data['score'], 1
     assert_equal post1.score, 1
   end
 
@@ -55,8 +59,11 @@ class PostsControllerTest < ActionController::TestCase
     user = create_user_with_post
     post1 = Post.first
 
-    post :downvote, forum_id: post1.forum.id, post_id: post1.id
+    put :downvote, forum_id: post1.forum.id, post_id: post1.id
 
+    data = JSON.parse(@response.body)
+
+    assert_equal data['score'], -1
     assert_equal post1.score, -1
   end
 
@@ -65,7 +72,7 @@ class PostsControllerTest < ActionController::TestCase
     user.update(sms_confirmed: false)
     post1 = Post.first
 
-    post :upvote, forum_id: post1.forum.id, post_id: post1.id
+    put :upvote, forum_id: post1.forum.id, post_id: post1.id
 
     assert_equal post1.score, 0
   end
@@ -74,7 +81,7 @@ class PostsControllerTest < ActionController::TestCase
     user = create_user_with_post(login=false)
     post1 = Post.first
 
-    post :upvote, forum_id: post1.forum.id, post_id: post1.id
+    put :upvote, forum_id: post1.forum.id, post_id: post1.id
 
     assert_equal post1.score, 0
   end
