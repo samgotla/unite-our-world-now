@@ -14,6 +14,7 @@ en:
     enter_location: Please enter a location to continue.
     comment_error: Error saving comment.
     comment_saved: Comment saved.
+    general_error: An error occurred.
 
   links:
     dashboard: Dashboard
@@ -29,6 +30,7 @@ en:
     promote: Promote To Moderator
     demote: Revoke Moderator Status
     verify: Verify User
+    delete_user: Delete User
 
   headers:
     your_approved_posts: Your Approved Posts
@@ -50,4 +52,5 @@ en:
     poster: POSTER
     moderator: MODERATOR
     admin: ADMIN
+    unconfirmed: UNCONFIRMED
     

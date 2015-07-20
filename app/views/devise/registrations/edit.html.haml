@@ -26,7 +26,7 @@
     = f.label :password_confirmation
     = f.password_field :password_confirmation, autocomplete: "off", class: 'form-control'
 
-  - if can? :post_topic, nil, current_user
+  - if can? :create, Post, current_user
     .form-group
       = f.label :zip_code
       %em= t('hints.location_button')

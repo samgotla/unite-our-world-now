@@ -19,6 +19,10 @@ Rails.application.routes.draw do
   # Admin
   scope '/admin' do
     get 'user_search' => 'admin#user_search'
+    put 'verify/:user_id' => 'admin#verify', as: 'admin_verify'
+    put 'promote/:user_id' => 'admin#promote', as: 'admin_promote'
+    put 'demote/:user_id' => 'admin#demote', as: 'admin_demote'
+    delete 'user/:user_id' => 'admin#destroy_user', as: 'admin_destroy_user'
   end
   ###
 

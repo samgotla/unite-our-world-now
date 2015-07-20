@@ -2,7 +2,13 @@
 #users
   - results.each do |user|
     .row
+      .col-md-3
+        %span= user.email
+
       .col-md-4
+        - if !user.sms_confirmed
+          %span.label.label-default= t('labels.unconfirmed')
+
         - if user.poster?
           %span.label.label-info= t('labels.poster')
 
@@ -10,20 +16,29 @@
           %span.label.label-warning= t('labels.moderator')
 
         - if user.admin?
-          %span.label.label-danger= t('labels.admin')      
-
-        %span= user.email
+          %span.label.label-danger= t('labels.admin')
           
-      .col-md-1 &nbsp;
-        
       .col-md-4
-        - if !user.sms_confirmed
-          %button.btn.btn-sm.btn-primary= t('links.verify')
+        - if can? :verify, User and !user.sms_confirmed
+          %a.btn.btn-sm.btn-primary{ href: admin_verify_path(user),
+                                    title: t('links.verify'), 'data-method': 'put' }
+            %span.glyphicon.glyphicon-ok
         
-        - if user.sms_confirmed and user.poster?
-          %button.btn.btn-sm.btn-primary= t('links.promote')
+        - if can? :promote, User and user.poster?
+          %a.btn.btn-sm.btn-primary{ href: admin_promote_path(user),
+                                    title: t('links.promote'), 'data-method': 'put' }
+            %span.glyphicon.glyphicon-star
 
-        - if user.moderator?
-          %button.btn.btn-sm.btn-warning= t('links.demote')      
+        - if can? :demote, User and user.moderator?
+          %a.btn.btn-sm.btn-danger{ href: admin_demote_path(user),
+                                   title: t('links.demote'), 'data-method': 'put' }
+            %span.glyphicon.glyphicon-star-empty
+
+        - if can? :delete, User and user != current_user
+          %a.btn.btn-sm.btn-danger{ href: admin_destroy_user_path(user),
+                                   title: t('links.delete_user'), 'data-method': 'delete' }
+            %span.glyphicon.glyphicon-trash
+          
+      %span.h1 &nbsp;
 
 = paginate results    

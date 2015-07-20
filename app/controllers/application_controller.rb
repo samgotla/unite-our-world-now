@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 
   protected
   def check_verified
-    if cannot? :post_topic, nil, current_user
+    if cannot? :create, Post, current_user
       redirect_to edit_user_registration_path
     end
   end

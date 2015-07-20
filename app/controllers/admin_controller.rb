@@ -1,6 +1,4 @@
 class AdminController < ApplicationController
-  MIN_TERM_LEN = 3
-
   before_action :authenticate_user!
   before_action :check_verified
 
@@ -8,19 +6,72 @@ class AdminController < ApplicationController
     authorize! :search, current_user
 
     results = []
-    term = params[:term].strip().gsub('%', '')
 
-    if term.length >= MIN_TERM_LEN
+    if params[:term].blank?
+      term = ''
+    else
+      term = params[:term].strip().gsub('%', '')
+    end
+
+    if term.blank?
+      results = User.all.order(:email, :phone).page(params[:page])
+    else
       results = User.where('email LIKE ? OR phone LIKE ?', "%#{ term }%",
                            "%#{ term }%")
                 .order(:email, :phone).page(params[:page])
-
-      render 'user_search', locals: {
-               results: results,
-               term: term
-             }
-    else
-      redirect_to dashboard_path
     end
+
+    render 'user_search', locals: {
+             results: results,
+             term: term
+           }
+  end
+
+  def verify
+    authorize! :verify, current_user
+
+    user = User.find(params[:user_id])
+
+    if not user.update(sms_confirmed: true)
+      flash[:alert] = I18n.t('msg.general_error')
+    end
+    
+    redirect_to :back
+  end
+
+  def promote
+    authorize! :promote, current_user
+
+    user = User.find(params[:user_id])
+
+    if not user.update(role: 'moderator')
+      flash[:alert] = I18n.t('msg.general_error')
+    end
+
+    redirect_to :back
+  end
+
+  def demote
+    authorize! :demote, current_user
+
+    user = User.find(params[:user_id])
+
+    if not user.update(role: 'poster')
+      flash[:alert] = I18n.t('msg.general_error')
+    end
+
+    redirect_to :back
+  end
+
+  def destroy_user
+    authorize! :delete, current_user
+
+    user = User.find(params[:user_id])
+
+    if not user.destroy
+      flash[:alert] = I18n.t('msg.general_error')
+    end
+
+    redirect_to :back
   end
 end
