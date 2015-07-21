@@ -47,7 +47,7 @@ class PostsControllerTest < ActionController::TestCase
     post1 = Post.first
 
     # MiniTest allows wrong verb? (but this fails in the real world)
-    put :upvote, forum_id: post1.forum.id, post_id: post1.id
+    put :vote, forum_id: post1.forum.id, post_id: post1.id, value: 'up'
 
     data = JSON.parse(@response.body)
 
@@ -59,7 +59,7 @@ class PostsControllerTest < ActionController::TestCase
     user = create_user_with_post
     post1 = Post.first
 
-    put :downvote, forum_id: post1.forum.id, post_id: post1.id
+    put :vote, forum_id: post1.forum.id, post_id: post1.id, value: 'down'
 
     data = JSON.parse(@response.body)
 
@@ -72,7 +72,7 @@ class PostsControllerTest < ActionController::TestCase
     user.update(sms_confirmed: false)
     post1 = Post.first
 
-    put :upvote, forum_id: post1.forum.id, post_id: post1.id
+    put :vote, forum_id: post1.forum.id, post_id: post1.id, value: 'up'
 
     assert_equal post1.score, 0
   end
@@ -81,7 +81,7 @@ class PostsControllerTest < ActionController::TestCase
     user = create_user_with_post(login=false)
     post1 = Post.first
 
-    put :upvote, forum_id: post1.forum.id, post_id: post1.id
+    put :vote, forum_id: post1.forum.id, post_id: post1.id, value: 'up'
 
     assert_equal post1.score, 0
   end
@@ -93,5 +93,48 @@ class PostsControllerTest < ActionController::TestCase
     get :show, forum_id: post1.forum.id, id: post1.id
 
     assert_select 'a.vote.voted'
+  end
+
+  test 'moderator should be able to approve post' do
+    user = create_user_with_post
+    user.update(role: 'moderator')
+
+    post1 = Post.first
+
+    put :approve, forum_id: post1.forum.id, post_id: post1.id
+    data = JSON.parse(@response.body)
+
+    assert data['approved']
+  end
+
+  test 'moderator should be able to unapprove post' do
+    user = create_user_with_post
+    user.update(role: 'moderator')
+
+    post1 = Post.first
+    post1.update(approved: true)
+
+    put :approve, forum_id: post1.forum.id, post_id: post1.id
+    data = JSON.parse(@response.body)
+
+    assert_not data['approved']
+  end
+
+  test 'normal user should not be able to appprove post' do
+    user = create_user_with_post
+    post1 = Post.first
+
+    assert_raises CanCan::AccessDenied do
+      put :approve, forum_id: post1.forum.id, post_id: post1.id
+    end
+  end
+
+  test 'normal user should not see approve button' do
+    user = create_user_with_post
+    post1 = Post.first
+
+    get :show, forum_id: post1.forum.id, id: post1.id
+
+    assert_select 'a.moderate', 0
   end
 end

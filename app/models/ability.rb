@@ -17,16 +17,14 @@ class Ability
     # Basic forum functions for verified users
     if user.sms_confirmed or user.admin?
       can :create, Post
-      can :upvote, Post
-      can :downvote, Post
+      can :vote, Post
       can :create, Comment
     end
     ###
 
     # Moderation
     if user.admin? or user.moderator?
-      can :moderate, Post
-      can :moderate, Comment
+      can :approve, Post
     end
     ###
 

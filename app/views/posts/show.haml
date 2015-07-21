@@ -1,8 +1,11 @@
-.post
+.post.row
   .col-md-1= render partial: 'posts/vote_block', locals: { forum: post.forum, post: post }
-  .col-md-11
+  
+  .col-md-10
     %h3= post.subject
     %p= post.body
+    
+  .col-md-1= render partial: 'posts/approve_block', locals: { forum: post.forum, post: post }
 
 - if can? :create, Post, current_user
   = form_for [ post.forum, post, Comment.new ] do |f|

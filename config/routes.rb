@@ -43,12 +43,11 @@ Rails.application.routes.draw do
     end
 
     resources :posts, only: [ :index, :show, :new, :create ] do
-      put :upvote
-      put :downvote
+      put 'vote/:value' => 'posts#vote', as: 'vote'
+      put :approve
       
       resources :comments, only: [ :create ] do
-        put :upvote
-        put :downvote
+        put :vote
       end
     end
   end

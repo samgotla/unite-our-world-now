@@ -103,4 +103,41 @@ class ForumsControllerTest < ActionController::TestCase
 
     assert_select 'a.vote.voted'
   end
+
+  test 'moderator should see approve button on forum page' do
+    user = create_user_with_post
+    user.update(role: 'moderator')
+    post1 = Post.first
+
+    get :all_posts, id: post1.forum.id
+
+    assert_select 'a.moderate', 1
+  end
+
+  test 'poster should not see approve button on forum page' do
+    user = create_user_with_post
+    post1 = Post.first
+
+    get :all_posts, id: post1.forum.id
+
+    assert_select 'a.moderate', 0
+  end
+
+  test 'should not see unapproved post on main forum page' do
+    user = create_user_with_post
+    post1 = Post.first
+
+    get :show, id: post1.forum.id
+
+    assert_select '.post', 0
+  end
+
+  test 'should see unapproved post on all posts page' do
+    user = create_user_with_post
+    post1 = Post.first
+
+    get :all_posts, id: post1.forum.id
+
+    assert_select '.post', 1
+  end
 end

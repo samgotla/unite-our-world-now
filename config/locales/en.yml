@@ -31,6 +31,8 @@ en:
     demote: Revoke Moderator Status
     verify: Verify User
     delete_user: Delete User
+    approve_post: Approve Post
+    unapprove_post: Unapprove Post
 
   headers:
     your_approved_posts: Your Approved Posts

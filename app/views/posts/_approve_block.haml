@@ -1,0 +1,9 @@
+- if can? :approve, Post
+  - if post.approved
+    %a.moderate.btn.btn-sm.btn-default{ href: forum_post_approve_path(forum, post),
+                                       title: t('links.unapprove_post') }
+      %span.glyphicon.glyphicon-remove
+  - else
+    %a.moderate.btn.btn-sm.btn-default{ title: t('links.approve_post'),
+                                       href: forum_post_approve_path(forum, post) }
+      %span.glyphicon.glyphicon-ok

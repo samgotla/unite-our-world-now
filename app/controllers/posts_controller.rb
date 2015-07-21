@@ -1,4 +1,7 @@
 class PostsController < ApplicationController
+  class VoteError < StandardError
+  end
+
   before_action :authenticate_user!
   before_action :check_verified
 
@@ -45,33 +48,39 @@ class PostsController < ApplicationController
     end
   end
 
-  def update
-  end
-
-  def upvote
+  def vote
     post = Post.find(params[:post_id])
     vote = Vote.find_by(user: current_user, votable: post)
+    value = params[:value] == 'up' ? 1: -1
 
-    if vote
-      vote.update(value: 1)
-    else
-      vote = Vote.create(user: current_user, votable: post, value: 1)
+    begin
+      if vote
+        if not vote.update(value: value)
+          raise VoteError
+        end
+      else
+        vote = Vote.create(user: current_user, votable: post, value: value)
+
+        if not vote.id
+          raise VoteError
+        end
+      end
+      
+      render json: { score: post.score, value: vote.value }
+
+    rescue VoteError
+      render json: { error: I18n.t('msg.general_error') }
     end
-
-    render json: { score: post.score(), value: vote.value }
   end
 
-  def downvote
+  def approve
     post = Post.find(params[:post_id])
-    vote = Vote.find_by(user: current_user, votable: post)
 
-    if vote
-      vote.update(value: -1)
+    if post.update(approved: !post.approved)
+      render json: { approved: post.approved }
     else
-      vote = Vote.create(user: current_user, votable: post, value: -1)
+      render json: { error: I18n.t('msg.general_error') }
     end
-
-    render json: { score: post.score(), value: vote.value }
   end
 
   private

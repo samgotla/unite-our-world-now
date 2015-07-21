@@ -9,7 +9,7 @@
     .children= link_to t('links.children'), children_forum_path(forum)
 
 %div    
-  - if can? :create, Post, current_user
+  - if can? :create, Post
     = link_to t('links.create_post'), new_forum_post_path(forum), class: 'btn btn-primary'
 
   - if params[:action] == 'all_posts'
@@ -22,6 +22,8 @@
     .post.row
       .col-md-1= render partial: 'posts/vote_block', locals: { forum: forum, post: post }
 
-      .col-md-11
+      .col-md-10
         .row.post-date= post.updated_at
         .row= link_to post.subject, forum_post_path(forum, post)
+
+      .col-md-1= render partial: 'posts/approve_block', locals: { forum: forum, post: post }
