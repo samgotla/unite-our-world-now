@@ -17,6 +17,7 @@ en:
     general_error: An error occurred.
     post_deleted: Post deleted.
     comment_deleted: Comment deleted.
+    post_updated: Post updated.
 
   links:
     dashboard: Dashboard
@@ -37,6 +38,7 @@ en:
     unapprove_post: Unapprove Post
     delete_post: Delete Post
     delete_comment: Delete Comment
+    edit_post: Edit Post
 
   headers:
     your_approved_posts: Your Approved Posts

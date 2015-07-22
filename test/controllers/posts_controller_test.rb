@@ -173,7 +173,7 @@ class PostsControllerTest < ActionController::TestCase
 
     get :show, id: Post.first.id
 
-    assert_select '.post .delete', 1
+    assert_select '.post .delete-post', 1
   end
 
   test 'other user should not see delete button' do
@@ -182,7 +182,7 @@ class PostsControllerTest < ActionController::TestCase
 
     get :show, id: Post.first.id
 
-    assert_select '.post .delete', 0
+    assert_select '.post .delete-post', 0
   end
 
   test 'comment owner should see comment delete button' do
@@ -190,7 +190,7 @@ class PostsControllerTest < ActionController::TestCase
 
     get :show, id: Comment.first.post.id
 
-    assert_select '.comment .delete', 1
+    assert_select '.comment .delete-comment', 1
   end
 
   test 'other user should not see comment delete button' do
@@ -199,6 +199,59 @@ class PostsControllerTest < ActionController::TestCase
 
     get :show, id: Post.first.id
 
-    assert_select '.comment .delete', 0
+    assert_select '.comment .delete-comment', 0
+  end
+
+  test 'owning user should be able to see edit page' do
+    user1 = create_user_with_post
+
+    get :edit, id: Post.first.id
+
+    assert_select 'form.edit_post', 1
+  end
+
+  test 'other user should not be able to see edit page' do
+    user1 = create_user_with_post(login=false)
+    user2 = create_ready_user
+
+    assert_raises CanCan::AccessDenied do
+      get :edit, id: Post.first.id
+    end
+  end
+
+  test 'owning user should be able to update post' do
+    user1 = create_user_with_post
+    post1 = Post.first
+
+    put :update, post: { body: 'updated' }, id: post1.id
+    post1 = Post.first
+    
+    assert_equal post1.body, 'updated'
+  end
+
+  test 'other user should not be able to update post' do
+    user1 = create_user_with_post(login=false)
+    user2 = create_ready_user
+
+    assert_raises CanCan::AccessDenied do
+      put :update, id: Post.first.id
+    end
+  end
+
+  test 'owning user should see edit button' do
+    user1 = create_user_with_post
+
+    get :show, id: Post.first.id
+
+    assert_select '.edit-post', 1
+  end
+
+  test 'other user should not see edit button' do
+    user1 = create_user_with_post(login=false)
+    user2 = create_ready_user
+
+    get :show, id: Post.first.id
+
+    assert_select '.edit-post', 0
   end
 end

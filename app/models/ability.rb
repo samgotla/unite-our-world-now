@@ -16,9 +16,11 @@ class Ability
 
     # Normal user functions
     can :edit, Post, user_id: user.id
+    can :update, Post, user_id: user.id
     can :destroy, Post, user_id: user.id
 
     can :edit, Comment, user_id: user.id
+    can :update, Comment, user_id: user.id
     can :destroy, Comment, user_id: user.id
     ###
 

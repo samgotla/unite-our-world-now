@@ -1,0 +1,5 @@
+- if can? :edit, post
+  %a.edit-post.btn.btn-sm.btn-default{ title: t('links.edit_post'),
+                           href: edit_post_path(post) }
+    %span.glyphicon.glyphicon-pencil
+  

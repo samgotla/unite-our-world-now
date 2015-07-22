@@ -3,18 +3,15 @@
   
   .col-md-10
     %h3= post.subject
-    
-    .post-date
-      %span= post.updated_at
-      %span= t('words.by')
-      %span= post.user.email
-      %span= t('words.in')
-      %span= link_to post.forum.name, forum_path(post.forum)
+
+    = render partial: 'header', locals: { post: post }
 
     %p= post.body
     
   .col-md-1
     .row= render partial: 'posts/approve_block', locals: { post: post }
+    %span.h6 &nbsp;
+    .row= render partial: 'posts/edit_block', locals: { post: post }
     %span.h6 &nbsp;
     .row= render partial: 'posts/delete', locals: { post: post }
 

@@ -1,0 +1,7 @@
+.post-date
+  %span= post.updated_at
+  %span= t('words.by')
+  %span= post.user.email
+  %span= t('words.in')
+  %span= link_to post.forum.name, forum_path(post.forum)
+  

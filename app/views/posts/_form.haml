@@ -1,11 +1,6 @@
-= form_for [forum, post] do |f|
-  .form-group
-    = f.label :subject
-    = f.text_field :subject, class: 'form-control'
-
-  .form-group
-    = f.label :body
-    = f.text_area :body, class: 'form-control'
-
-  .form-group
-    = f.submit class: 'btn btn-primary'
+- if defined? forum
+  = form_for [ forum, post ] do |f|
+    = render partial: 'form_controls', locals: { f: f }
+- else
+  = form_for post do |f|
+    = render partial: 'form_controls', locals: { f: f }

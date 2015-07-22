@@ -19,8 +19,7 @@ class PostsController < ApplicationController
 
   def edit
     render :edit, locals: {
-             forum: Forum.find(params[:forum_id]),
-             post: Post.find(params[:post][:id])
+             post: Post.find(params[:id])
            }
   end
 
@@ -44,6 +43,17 @@ class PostsController < ApplicationController
                forum: Forum.find(params[:forum_id]),
                post: post
              }
+    end
+  end
+
+  def update
+    post = Post.find(params[:id])
+
+    if post.update(post_params)
+      flash[:info] = I18n.t('msg.post_updated')
+      redirect_to post_path(post)
+    else
+      render :edit, locals: { post: post }
     end
   end
 
