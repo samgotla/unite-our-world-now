@@ -19,6 +19,7 @@ class Ability
       can :create, Post
       can :vote, Post
       can :create, Comment
+      can :vote, Comment
     end
     ###
 

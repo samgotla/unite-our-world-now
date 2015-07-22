@@ -42,13 +42,15 @@ Rails.application.routes.draw do
       get :all_posts
     end
 
-    resources :posts, only: [ :index, :show, :new, :create ] do
-      put 'vote/:value' => 'posts#vote', as: 'vote'
-      put :approve
-      
-      resources :comments, only: [ :create ] do
-        put :vote
-      end
-    end
+    resources :posts, only: [ :index, :new, :create ]
   end
+
+  resources :posts, only: [ :show ] do
+    put 'vote/:value' => 'posts#vote', as: 'vote'
+    put :approve
+
+    resources :comments, only: [ :create ] do
+      put 'vote/:value' => 'comments#vote', as: 'vote'
+    end
+  end      
 end

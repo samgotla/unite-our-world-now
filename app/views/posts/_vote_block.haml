@@ -1,12 +1,12 @@
-- if can? :vote, Post, current_user
+- if can? :vote, Post
   .row
-    %a.vote.btn.btn-sm.btn-default{ href: forum_post_vote_path(forum, post, :up),
+    %a.vote.btn.btn-sm.btn-default{ href: post_vote_path(post, :up),
                                    class: post.vote_class(current_user, :up) }
       %span.glyphicon.glyphicon-arrow-up
 
   .score= post.score
 
   .row
-    %a.vote.btn.btn-sm.btn-default{ href: forum_post_vote_path(forum, post, :down),
+    %a.vote.btn.btn-sm.btn-default{ href: post_vote_path(post, :down),
                                    class: post.vote_class(current_user, :down) }
       %span.glyphicon.glyphicon-arrow-down

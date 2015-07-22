@@ -24,6 +24,6 @@
 
       .col-md-10
         .row.post-date= post.updated_at
-        .row= link_to post.subject, forum_post_path(forum, post)
+        .row= link_to post.subject, post_path(post)
 
       .col-md-1= render partial: 'posts/approve_block', locals: { forum: forum, post: post }

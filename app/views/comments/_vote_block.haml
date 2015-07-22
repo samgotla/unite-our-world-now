@@ -1,0 +1,12 @@
+- if can? :vote, Comment
+  .row
+    %a.vote.btn.btn-sm.btn-default{ href: post_comment_vote_path(post, comment, :up),
+                                   class: comment.vote_class(current_user, :up) }
+      %span.glyphicon.glyphicon-arrow-up
+
+  .score= comment.score
+
+  .row
+    %a.vote.btn.btn-sm.btn-default{ href: post_comment_vote_path(post, comment, :down),
+                                   class: comment.vote_class(current_user, :down) }
+      %span.glyphicon.glyphicon-arrow-down

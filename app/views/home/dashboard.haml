@@ -3,12 +3,12 @@
 %h3= t('headers.your_approved_posts')
 %ul#approved_posts
   - current_user.approved_posts.each do |post|
-    %li= link_to post.subject, forum_post_path(post.forum, post)
+    %li= link_to post.subject, post_path(post)
 
 %h3= t('headers.your_pending_posts')
 %ul#pending_posts
   - current_user.pending_posts.each do |post|
-    %li= link_to post.subject, forum_post_path(post.forum, post)
+    %li= link_to post.subject, post_path(post)
 
 - if current_user.admin?
   %h3= t('headers.pending_users')

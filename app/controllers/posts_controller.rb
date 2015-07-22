@@ -6,8 +6,7 @@ class PostsController < ApplicationController
   before_action :check_verified
 
   check_authorization
-  load_and_authorize_resource :forum
-  load_and_authorize_resource :post, through: 'forum'
+  load_and_authorize_resource :post
 
   protect_from_forgery except: [ :upvote, :downvote ]
 
@@ -39,7 +38,7 @@ class PostsController < ApplicationController
     post.user = current_user
 
     if post.save
-      redirect_to forum_post_path(forum, post)
+      redirect_to post_path(post)
     else
       render :new, locals: {
                forum: Forum.find(params[:forum_id]),

@@ -18,7 +18,32 @@ class CommentsController < ApplicationController
       flash[:error] = I18n.t('msg.comment_error')
     end
 
-    redirect_to forum_post_path(post.forum, post.id)
+    redirect_to post_path(post)
+  end
+
+  def vote
+    comment = Comment.find(params[:comment_id])
+    vote = Vote.find_by(user: current_user, votable: comment)
+    value = params[:value] == 'up' ? 1: -1
+
+    begin
+      if vote
+        if not vote.update(value: value)
+          raise VoteError
+        end
+      else
+        vote = Vote.create(user: current_user, votable: comment, value: value)
+
+        if not vote.id
+          raise VoteError
+        end
+      end
+      
+      render json: { score: comment.score, value: vote.value }
+
+    rescue VoteError
+      render json: { error: I18n.t('msg.general_error') }
+    end
   end
 
   private
