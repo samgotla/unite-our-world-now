@@ -82,6 +82,19 @@ class PostsController < ApplicationController
     end
   end
 
+  def destroy
+    post = Post.find(params[:id])
+    forum = post.forum
+
+    if post.destroy
+      flash[:notice] = I18n.t('msg.post_deleted')
+    else
+      flash[:alert] = I18n.t('msg.general_error')
+    end
+
+    redirect_to forum_path(forum)
+  end
+
   private
   def post_params
     params.require(:post).permit(:subject, :body)

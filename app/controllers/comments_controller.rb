@@ -46,6 +46,19 @@ class CommentsController < ApplicationController
     end
   end
 
+  def destroy
+    comment = Comment.find(params[:id])
+    post = comment.post
+
+    if comment.destroy
+      flash[:notice] = I18n.t('msg.comment_deleted')
+    else
+      flash[:alert] = I18n.t('msg.general_error')
+    end
+
+    redirect_to post_path(post)
+  end
+
   private
   def comment_params
     params.require(:comment).permit(:body)

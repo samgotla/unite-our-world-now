@@ -52,4 +52,22 @@ class PostTest < ActiveSupport::TestCase
 
     assert_equal post.vote_class(user, :up), 'voted'
   end
+
+  test 'should delete votes' do
+    user = create_user_with_post_vote(login=false)
+    post = Post.first
+
+    post.destroy
+
+    assert_equal Vote.all.length, 0
+  end
+
+  test 'should delete comments' do
+    user = create_user_with_comment(login=false)
+    post = Post.first
+
+    post.destroy
+
+    assert_equal Comment.all.length, 0
+  end
 end

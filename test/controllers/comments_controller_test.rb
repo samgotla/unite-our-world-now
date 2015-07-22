@@ -38,4 +38,48 @@ class CommentsControllerTest < ActionController::TestCase
     assert_redirected_to new_user_session_path
     assert_equal comment.score, 0
   end
+
+  test 'user should be able to delete owned comment' do
+    user = create_user_with_comment
+    comment = Comment.first
+
+    delete :destroy, id: comment.id
+    
+    assert_raises ActiveRecord::RecordNotFound do
+      Comment.find(comment.id)
+    end
+
+    assert_redirected_to post_path(comment.post)
+  end
+
+  test 'user should not be able to delete unowned comment' do
+    user1 = create_user_with_comment(login=false)
+    user2 = create_ready_user
+    comment = Comment.first
+
+    assert_raises CanCan::AccessDenied do
+      delete :destroy, id: comment.id
+    end
+  end
+
+  test 'admin should be able to delete any comment' do
+    user1 = create_user_with_comment(login=false)
+    admin = FactoryGirl.create(:user, role: 'admin')
+    comment = Comment.first
+    sign_in admin
+
+    delete :destroy, id: comment.id
+
+    assert_equal Comment.all.length, 0
+  end
+
+  test 'votes should also be deleted' do
+    user1 = create_user_with_comment_vote
+    comment = Comment.first
+
+    delete :destroy, id: comment.id
+
+    assert_equal Comment.all.length, 0
+    assert_equal Vote.all.length, 0
+  end
 end

@@ -45,12 +45,14 @@ Rails.application.routes.draw do
     resources :posts, only: [ :index, :new, :create ]
   end
 
-  resources :posts, only: [ :show ] do
+  resources :posts, only: [ :show, :edit, :update, :destroy ] do
     put 'vote/:value' => 'posts#vote', as: 'vote'
     put :approve
 
-    resources :comments, only: [ :create ] do
-      put 'vote/:value' => 'comments#vote', as: 'vote'
-    end
-  end      
+    resources :comments, only: [ :create ]
+  end
+
+  resources :comments, only: [ :edit, :update, :destroy ] do
+    put 'vote/:value' => 'comments#vote', as: 'vote'
+  end
 end

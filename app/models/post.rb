@@ -1,8 +1,8 @@
 class Post < ActiveRecord::Base
   belongs_to :user
   belongs_to :forum
-  has_many :comments, -> { order 'updated_at desc' }
-  has_many :votes, as: :votable
+  has_many :comments, -> { order 'updated_at desc' }, dependent: :destroy
+  has_many :votes, as: :votable, dependent: :destroy
 
   validates :subject, presence: true
   validates :body, presence: true

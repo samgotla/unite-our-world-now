@@ -64,7 +64,7 @@ class AdminController < ApplicationController
   end
 
   def destroy_user
-    authorize! :delete, current_user
+    authorize! :destroy, current_user
 
     user = User.find(params[:user_id])
 

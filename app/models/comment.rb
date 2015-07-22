@@ -1,7 +1,7 @@
 class Comment < ActiveRecord::Base
   belongs_to :post
   belongs_to :user
-  has_many :votes, as: :votable
+  has_many :votes, as: :votable, dependent: :destroy
 
   validates :body, presence: true
   validates :post_id, presence: true

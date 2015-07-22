@@ -34,7 +34,7 @@
                                    title: t('links.demote'), 'data-method': 'put' }
             %span.glyphicon.glyphicon-star-empty
 
-        - if can? :delete, User and user != current_user
+        - if can? :destroy, User and user != current_user
           %a.delete.btn.btn-sm.btn-danger{ href: admin_destroy_user_path(user),
                                    title: t('links.delete_user'), 'data-method': 'delete' }
             %span.glyphicon.glyphicon-trash

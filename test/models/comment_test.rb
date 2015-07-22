@@ -30,4 +30,13 @@ class CommentTest < ActiveSupport::TestCase
     c = Comment.first
     assert_equal c.vote_class(user, :up), 'voted'
   end
+
+  test 'should delete votes' do
+    user = create_user_with_comment_vote(login=false)
+    c = Comment.first
+
+    c.destroy
+
+    assert_equal Vote.all.length, 0
+  end
 end

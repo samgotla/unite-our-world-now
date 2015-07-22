@@ -12,6 +12,14 @@ class Ability
     can :read, Post    
 
     can :read, Comment
+    ###    
+
+    # Normal user functions
+    can :edit, Post, user_id: user.id
+    can :destroy, Post, user_id: user.id
+
+    can :edit, Comment, user_id: user.id
+    can :destroy, Comment, user_id: user.id
     ###
 
     # Basic forum functions for verified users
@@ -35,7 +43,10 @@ class Ability
       can :verify, User
       can :promote, User
       can :demote, User
-      can :delete, User
+      can :destroy, User
+
+      can :destroy, Post
+      can :destroy, Comment
     end
     ###
     

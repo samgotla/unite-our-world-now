@@ -137,4 +137,68 @@ class PostsControllerTest < ActionController::TestCase
 
     assert_select 'a.moderate', 0
   end
+
+  test 'user should be able to delete owned post' do
+    user = create_user_with_post
+    post1 = Post.first
+
+    delete :destroy, id: post1.id
+
+    assert_equal Post.all.length, 0
+  end
+
+  test 'user should not be able to delete unowned post' do
+    user1 = create_user_with_post(login=false)
+    user2 = create_ready_user
+    post1 = Post.first
+
+    assert_raises CanCan::AccessDenied do
+      delete :destroy, id: post1.id
+    end
+  end
+
+  test 'admin should be able to delete any post' do
+    user1 = create_user_with_post(login=false)
+    admin = FactoryGirl.create(:user, role: 'admin')
+    post1 = Post.first
+    sign_in admin
+
+    delete :destroy, id: post1.id
+
+    assert_equal Post.all.length, 0
+  end
+
+  test 'owning user should see delete button' do
+    user = create_user_with_post
+
+    get :show, id: Post.first.id
+
+    assert_select '.post .delete', 1
+  end
+
+  test 'other user should not see delete button' do
+    user1 = create_user_with_post(login=false)
+    user2 = create_ready_user
+
+    get :show, id: Post.first.id
+
+    assert_select '.post .delete', 0
+  end
+
+  test 'comment owner should see comment delete button' do
+    user = create_user_with_comment
+
+    get :show, id: Comment.first.post.id
+
+    assert_select '.comment .delete', 1
+  end
+
+  test 'other user should not see comment delete button' do
+    user1 = create_user_with_comment(login=false)
+    user2 = create_ready_user
+
+    get :show, id: Post.first.id
+
+    assert_select '.comment .delete', 0
+  end
 end
