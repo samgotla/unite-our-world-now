@@ -82,4 +82,39 @@ class CommentsControllerTest < ActionController::TestCase
     assert_equal Comment.all.length, 0
     assert_equal Vote.all.length, 0
   end
+
+  test 'owning user should be able to update comment' do
+    user = create_user_with_comment
+
+    put :update, comment: { body: 'updated' }, id: Comment.first.id
+
+    assert_redirected_to post_path(Comment.first.post)
+    assert_equal Comment.first.body, 'updated'
+  end
+
+  test 'other user should not be able to update comment' do
+    user1 = create_user_with_comment(login=false)
+    user2 = create_ready_user
+
+    assert_raises CanCan::AccessDenied do
+      put :update, comment: { body: 'updated' }, id: Comment.first.id
+    end
+  end
+
+  test 'owning user should be able to edit comment' do
+    user = create_user_with_comment
+
+    get :edit, id: Comment.first.id
+
+    assert_select 'form.edit_comment'
+  end
+
+  test 'other user should not be able to edit comment' do
+    user1 = create_user_with_comment(login=false)
+    user2 = create_ready_user
+
+    assert_raises CanCan::AccessDenied do
+      get :edit, id: Comment.first.id
+    end
+  end
 end

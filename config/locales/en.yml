@@ -39,6 +39,7 @@ en:
     delete_post: Delete Post
     delete_comment: Delete Comment
     edit_post: Edit Post
+    edit_comment: Edit Comment
 
   headers:
     your_approved_posts: Your Approved Posts

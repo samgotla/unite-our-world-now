@@ -37,3 +37,5 @@
 
       .col-md-1
         .row= render partial: 'comments/delete', locals: { comment: c }
+        %span.h6 &nbsp;
+        .row= render partial: 'comments/edit_block', locals: { comment: c }

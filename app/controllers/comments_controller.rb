@@ -5,6 +5,24 @@ class CommentsController < ApplicationController
   check_authorization
   load_and_authorize_resource
 
+  def edit
+    comment = Comment.find(params[:id])
+
+    render :edit, locals: { comment: comment }
+  end
+
+  def update
+    comment = Comment.find(params[:id])
+
+    if comment.update(comment_params)
+      flash[:notice] = I18n.t('msg.comment_saved')
+      redirect_to post_path(comment.post)
+    else
+      flash[:error] = I18n.t('msg.comment_error')
+      render :edit, locals: { comment: comment }
+    end
+  end
+
   def create
     post = Post.find(params[:post_id])
     comment = Comment.new(comment_params)

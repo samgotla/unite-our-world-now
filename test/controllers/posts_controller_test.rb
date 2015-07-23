@@ -254,4 +254,21 @@ class PostsControllerTest < ActionController::TestCase
 
     assert_select '.edit-post', 0
   end
+
+  test 'owning user should see comment edit button' do
+    user = create_user_with_comment
+
+    get :show, id: Post.first.id
+
+    assert_select 'a.edit-comment'
+  end
+
+  test 'other user should not see comment edit button' do
+    user1 = create_user_with_post(login=false)
+    user2 = create_ready_user
+
+    get :show, id: Post.first.id
+
+    assert_select 'a.edit-comment', 0
+  end
 end
