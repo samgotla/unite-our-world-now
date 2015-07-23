@@ -18,6 +18,7 @@ en:
     post_deleted: Post deleted.
     comment_deleted: Comment deleted.
     post_updated: Post updated.
+    account_deleted: Your account has been deleted.
 
   links:
     dashboard: Dashboard
@@ -34,6 +35,7 @@ en:
     demote: Revoke Moderator Status
     verify: Verify User
     delete_user: Delete User
+    restore_user: Restore User
     approve_post: Approve Post
     unapprove_post: Unapprove Post
     delete_post: Delete Post
@@ -62,6 +64,7 @@ en:
     moderator: MODERATOR
     admin: ADMIN
     unconfirmed: UNCONFIRMED
+    deleted: '[deleted]'
 
   words:
     by: by

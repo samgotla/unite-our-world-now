@@ -32,7 +32,7 @@
         .row.post-date
           %span= c.updated_at
           %span= t('words.by')
-          %span= c.user.email
+          %span= c.user.deleted? ? t('labels.deleted'): c.user.email
         .row= c.body
 
       .col-md-1

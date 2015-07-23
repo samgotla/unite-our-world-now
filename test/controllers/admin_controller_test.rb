@@ -96,7 +96,7 @@ class AdminControllerTest < ActionController::TestCase
     delete :destroy_user, user_id: user.id
 
     user = User.find_by(role: 'poster')
-    assert_nil user
+    assert_not_nil user.deleted_at
   end
 
   test 'unconfirmed user row should not show promote button' do
@@ -116,7 +116,7 @@ class AdminControllerTest < ActionController::TestCase
 
     get :user_search
 
-    assert_select '#users .row a.delete', 1
+    assert_select '#users .row a.delete-user', 1
   end
 
   test 'should see promote button for verified user' do
@@ -137,5 +137,40 @@ class AdminControllerTest < ActionController::TestCase
     get :user_search
 
     assert_select '#users .row a.demote', 1
+  end
+
+  test 'admin should see restore button for deleted user' do
+    admin = FactoryGirl.create(:user, role: 'admin')
+    user = create_ready_user(login=false)
+    user.destroy
+    sign_in admin
+
+    get :user_search
+
+    assert_select 'a.restore-user'
+  end
+
+  test 'admin should be able to restore user' do
+    admin = FactoryGirl.create(:user, role: 'admin')
+    user = create_ready_user(login=false)
+    user.destroy
+    sign_in admin
+
+    put :restore_user, user_id: user.id
+
+    user = User.find(user.id)
+    assert_nil user.deleted_at
+  end
+
+  test 'non-admin should not be able to restore user' do
+    admin = FactoryGirl.create(:user, role: 'admin')
+    user1 = create_ready_user(login=false)
+    user2 = create_ready_user
+
+    user1.destroy
+
+    assert_raises CanCan::AccessDenied do
+      get :restore_user, user_id: user1.id
+    end
   end
 end

@@ -70,4 +70,11 @@ class PostTest < ActiveSupport::TestCase
 
     assert_equal Comment.all.length, 0
   end
+  
+  test 'should get deleted user' do
+    user = create_user_with_post(login=false)
+    user.destroy
+
+    assert_equal Post.first.user, user
+  end
 end

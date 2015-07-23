@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  before_action :check_deleted
   after_action :check_sms_confirmed
 
   # TODO: remove me!
@@ -11,6 +12,14 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+  def check_deleted
+    if user_signed_in? and current_user.deleted?
+      sign_out current_user
+      flash[:error] = I18n.t('msg.account_deleted')
+      redirect_to new_user_session_path
+    end    
+  end
+  
   def check_verified
     if cannot? :create, Post, current_user
       redirect_to edit_user_registration_path

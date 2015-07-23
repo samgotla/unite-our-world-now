@@ -1,5 +1,5 @@
 class Post < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :user, -> { with_deleted }
   belongs_to :forum
   has_many :comments, -> { order 'updated_at desc' }, dependent: :destroy
   has_many :votes, as: :votable, dependent: :destroy

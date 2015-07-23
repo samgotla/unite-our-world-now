@@ -13,9 +13,13 @@ class RegistrationsControllerTest < ActionController::TestCase
 
     sign_in user
 
-    assert_difference('User.count', -1) do
-      delete :destroy, id: user.id
-    end
+    delete :destroy, id: user.id
+
+    assert_not_nil User.first.deleted_at
+
+    # assert_difference('User.count', -1) do
+    #   delete :destroy, id: user.id
+    # end
   end
   
   test 'should create user' do

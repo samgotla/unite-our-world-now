@@ -106,4 +106,14 @@ class HomeControllerTest < ActionController::TestCase
 
     assert_select '#user_search_form', 0
   end
+
+  test 'deleted user should be redirected' do
+    user = create_ready_user
+    user.destroy
+    sign_in user
+
+    get :dashboard
+
+    assert_redirected_to new_user_session_path 
+  end
 end

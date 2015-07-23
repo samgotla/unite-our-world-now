@@ -140,4 +140,14 @@ class ForumsControllerTest < ActionController::TestCase
 
     assert_select '.post', 1
   end
+
+  test 'should not see deleted user email in post header' do
+    user1 = create_user_with_post(login=false)
+    user2 = create_ready_user
+
+    user1.destroy
+    get :all_posts, id: Forum.first.id
+
+    assert_select '.post-date', /deleted/
+  end
 end

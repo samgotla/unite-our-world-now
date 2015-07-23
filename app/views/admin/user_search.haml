@@ -17,6 +17,9 @@
 
         - if user.admin?
           %span.label.label-danger= t('labels.admin')
+
+        - if user.deleted?
+          %span.label.label-default= t('labels.deleted')
           
       .col-md-4
         - if can? :verify, User and !user.sms_confirmed
@@ -35,9 +38,16 @@
             %span.glyphicon.glyphicon-star-empty
 
         - if can? :destroy, User and user != current_user
-          %a.delete.btn.btn-sm.btn-danger{ href: admin_destroy_user_path(user),
-                                   title: t('links.delete_user'), 'data-method': 'delete' }
-            %span.glyphicon.glyphicon-trash
+          - if user.deleted?      
+            %a.restore-user.btn.btn-sm.btn-danger{ href: admin_restore_user_path(user),
+                                                  title: t('links.restore_user'),
+                                                  'data-method': 'put' }
+              %span.glyphicon.glyphicon-share-alt
+          - else
+            %a.delete-user.btn.btn-sm.btn-danger{ href: admin_destroy_user_path(user),
+                                                 title: t('links.delete_user'),
+                                                 'data-method': 'delete' }
+              %span.glyphicon.glyphicon-trash
           
       %span.h1 &nbsp;
 

@@ -74,4 +74,16 @@ class AdminController < ApplicationController
 
     redirect_to :back
   end
+
+  def restore_user
+    authorize! :restore, current_user
+
+    user = User.find(params[:user_id])
+
+    if not user.update(deleted_at: nil)
+      flash[:alert] = I18n.t('msg.general_error')
+    end
+
+    redirect_to :back
+  end 
 end

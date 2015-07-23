@@ -39,4 +39,11 @@ class CommentTest < ActiveSupport::TestCase
 
     assert_equal Vote.all.length, 0
   end
+
+  test 'should get deleted user' do
+    user = create_user_with_comment(login=false)
+    user.destroy
+
+    assert_equal Comment.first.user, user
+  end
 end

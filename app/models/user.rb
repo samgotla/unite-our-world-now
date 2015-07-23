@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   SMS_CODE_LENGTH = 6
   ROLES = %w[admin moderator poster]
   PHONE_SUB_REGEX = /[^\d+]/
+
+  acts_as_paranoid
   
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -32,6 +34,7 @@ class User < ActiveRecord::Base
   has_many :comment_votes, -> { where(votable_type: 'Comment') }, class: Vote
 
   scope :pending, -> { where(sms_confirmed: false, role: 'poster') }
+  default_scope { with_deleted }
 
   def set_defaults
     if !self.role

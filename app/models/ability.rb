@@ -46,6 +46,7 @@ class Ability
       can :promote, User
       can :demote, User
       can :destroy, User
+      can :restore, User
 
       can :destroy, Post
       can :destroy, Comment

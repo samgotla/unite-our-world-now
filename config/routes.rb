@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     put 'verify/:user_id' => 'admin#verify', as: 'admin_verify'
     put 'promote/:user_id' => 'admin#promote', as: 'admin_promote'
     put 'demote/:user_id' => 'admin#demote', as: 'admin_demote'
+    put 'restore/:user_id' => 'admin#restore_user', as: 'admin_restore_user'
     delete 'user/:user_id' => 'admin#destroy_user', as: 'admin_destroy_user'
   end
   ###
