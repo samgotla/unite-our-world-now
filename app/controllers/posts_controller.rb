@@ -8,8 +8,6 @@ class PostsController < ApplicationController
   check_authorization
   load_and_authorize_resource :post
 
-  protect_from_forgery except: [ :upvote, :downvote ]
-
   def new
     render :new, locals: {
              forum: Forum.find(params[:forum_id]),
