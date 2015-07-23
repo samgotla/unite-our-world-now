@@ -19,7 +19,7 @@
   
 #posts  
   - posts.each do |post|
-    .post.row
+    .post.row.votable
       .col-md-1= render partial: 'posts/vote_block', locals: { forum: forum, post: post }
 
       .col-md-10
