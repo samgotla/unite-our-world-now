@@ -1,9 +1,10 @@
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
+require 'database_cleaner'
+require 'capybara/rails'
 
-class ActiveSupport::TestCase
-  def setup
+def setup_geocoder
     Geocoder.configure(:lookup => :test)
 
     Geocoder::Lookup::Test.add_stub(
@@ -26,6 +27,11 @@ class ActiveSupport::TestCase
     )
 
     Geocoder::Lookup::Test.set_default_stub([])
+end
+
+class ActiveSupport::TestCase
+  def setup
+    setup_geocoder
   end
 
   def create_ready_user(login=true)
@@ -77,5 +83,33 @@ class ActiveSupport::TestCase
     vote = FactoryGirl.create(:vote, user: user, votable: comment)
 
     return user
+  end
+
+  def login(user)
+    visit new_user_session_path
+    fill_in 'user_email', with: user.email
+    fill_in 'user_password', with: user.password
+    click_button 'Log in'
+  end
+end
+
+class ActionDispatch::IntegrationTest
+  include Capybara::DSL
+
+  Capybara.app_host = 'http://localhost:3001'
+  Capybara.current_driver = :selenium
+  Capybara.server_port = 3001
+  Capybara.run_server = true
+  
+  DatabaseCleaner.strategy = :truncation
+
+  self.use_transactional_fixtures = false
+
+  def setup
+    setup_geocoder
+  end
+
+  def teardown
+    DatabaseCleaner.clean
   end
 end

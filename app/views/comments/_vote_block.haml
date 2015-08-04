@@ -1,12 +1,14 @@
 - if can? :vote, Comment
   .row
     %a.vote.btn.btn-sm.btn-default{ href: comment_vote_path(comment, :up),
-                                   class: comment.vote_class(current_user, :up) }
+                                   class: comment.vote_class(current_user, :up),
+                                   id: 'upvote_comment_%d' % comment.id }
       %span.glyphicon.glyphicon-arrow-up
 
   .score= comment.score
 
   .row
     %a.vote.btn.btn-sm.btn-default{ href: comment_vote_path(comment, :down),
-                                   class: comment.vote_class(current_user, :down) }
+                                   class: comment.vote_class(current_user, :down),
+                                   id: 'downvote_comment_%d' % comment.id }
       %span.glyphicon.glyphicon-arrow-down

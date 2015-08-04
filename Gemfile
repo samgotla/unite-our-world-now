@@ -14,6 +14,12 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'sqlite3'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'database_cleaner'
+  gem 'minitest-around'
+  gem 'selenium-webdriver'
+  gem 'single_test'
 end
 
 group :production do

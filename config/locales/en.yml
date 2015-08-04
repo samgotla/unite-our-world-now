@@ -43,6 +43,9 @@ en:
     edit_post: Edit Post
     edit_comment: Edit Comment
 
+  titles:
+    search: Search
+
   headers:
     your_approved_posts: Your Approved Posts
     your_pending_posts: Your Pending Posts
