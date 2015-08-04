@@ -90,15 +90,6 @@ class HomeControllerTest < ActionController::TestCase
     assert_select '#user_search_form'
   end
 
-  test 'moderator should see search field' do
-    mod = FactoryGirl.create(:user, role: 'moderator', sms_confirmed: true)
-    sign_in mod
-
-    get :dashboard
-
-    assert_select '#user_search_form'
-  end
-
   test 'normal user should not see search field' do
     user = create_ready_user
 

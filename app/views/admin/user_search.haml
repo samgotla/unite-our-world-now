@@ -6,7 +6,7 @@
         %span= user.email
 
       .col-md-4
-        - if !user.sms_confirmed
+        - if !user.sms_confirmed and !user.admin?
           %span.label.label-default= t('labels.unconfirmed')
 
         - if user.poster?
@@ -22,31 +22,39 @@
           %span.label.label-default= t('labels.deleted')
           
       .col-md-4
-        - if can? :verify, User and !user.sms_confirmed
+        - if can? :verify, User and !user.sms_confirmed 
           %a.verify.btn.btn-sm.btn-primary{ href: admin_verify_path(user),
-                                    title: t('links.verify'), 'data-method': 'put' }
+                                           title: t('links.verify'),
+                                           'data-method': 'put',
+                                           id: 'verify_user_%d' % user.id }
             %span.glyphicon.glyphicon-ok
         
         - if can? :promote, User and user.poster? and user.sms_confirmed
           %a.promote.btn.btn-sm.btn-primary{ href: admin_promote_path(user),
-                                    title: t('links.promote'), 'data-method': 'put' }
+                                            title: t('links.promote'),
+                                            'data-method': 'put',
+                                            id: 'promote_user_%d' % user.id }
             %span.glyphicon.glyphicon-star
 
         - if can? :demote, User and user.moderator? and user.sms_confirmed
           %a.demote.btn.btn-sm.btn-danger{ href: admin_demote_path(user),
-                                   title: t('links.demote'), 'data-method': 'put' }
+                                          title: t('links.demote'),
+                                          'data-method': 'put',
+                                          id: 'demote_user_%d' % user.id }
             %span.glyphicon.glyphicon-star-empty
 
         - if can? :destroy, User and user != current_user
           - if user.deleted?      
             %a.restore-user.btn.btn-sm.btn-danger{ href: admin_restore_user_path(user),
                                                   title: t('links.restore_user'),
-                                                  'data-method': 'put' }
+                                                  'data-method': 'put',
+                                                  id: 'restore_user_%d' % user.id }
               %span.glyphicon.glyphicon-share-alt
           - else
             %a.delete-user.btn.btn-sm.btn-danger{ href: admin_destroy_user_path(user),
                                                  title: t('links.delete_user'),
-                                                 'data-method': 'delete' }
+                                                 'data-method': 'delete',
+                                                 id: 'delete_user_%d' % user.id }
               %span.glyphicon.glyphicon-trash
           
       %span.h1 &nbsp;

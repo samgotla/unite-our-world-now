@@ -29,7 +29,7 @@
         = text_field_tag :term, nil, class: 'form-control'
         
         %span.input-group-btn
-          %button.btn.btn-default
+          %button.btn.btn-default{ title: t('titles.search') }
             %span.glyphicon.glyphicon-search
 
 - if current_user.moderator?

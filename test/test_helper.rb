@@ -85,6 +85,10 @@ class ActiveSupport::TestCase
     return user
   end
 
+  def create_admin
+    FactoryGirl.create(:user, role: 'admin')
+  end
+
   # Used for integration tests only (Capybara)
   def login(user)
     visit new_user_session_path
