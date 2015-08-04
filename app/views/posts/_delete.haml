@@ -1,5 +1,6 @@
 - if can? :destroy, post
   %a.delete-post.btn.btn-sm.btn-danger{ title: t('links.delete_post'),
-                           href: post_path(post),
-                           'data-method': 'delete' }
+                                       href: post_path(post),
+                                       'data-method': 'delete',
+                                       id: 'delete_post_%d' % post.id }
     %span.glyphicon.glyphicon-trash

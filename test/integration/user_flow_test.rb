@@ -109,4 +109,70 @@ class UserFlowTest < ActionDispatch::IntegrationTest
     click_link 'upvote_comment_%d' % Comment.first.id
     assert has_css? '.comment .voted'
   end
+
+  test 'downvote a post' do
+    user = create_user_with_post(login=false)
+    login user
+
+    visit post_path Post.first
+    click_link 'downvote_post_%d' % Post.first.id
+    assert has_css? '.post .voted'
+  end
+
+  test 'downvote a comment' do
+    user = create_user_with_comment(login=false)
+    login user
+
+    visit post_path Comment.first.post
+    click_link 'downvote_comment_%d' % Comment.first.id
+    assert has_css? '.comment .voted'
+  end
+
+  test 'edit a post' do
+    user = create_user_with_post(login=false)
+    login user
+
+    visit post_path Post.first
+    click_link 'edit_post_%d' % Post.first.id
+
+    fill_in 'post_subject', with: 'subject edited'
+    fill_in 'post_body', with: 'body edited'
+    click_button 'Update Post'
+
+    assert has_content? 'subject edited'
+    assert has_content? 'body edited'
+  end
+
+  test 'edit a comment' do
+    user = create_user_with_comment(login=false)
+    login user
+
+    visit post_path Comment.first.post
+    click_link 'edit_comment_%d' % Comment.first.post.id
+
+    fill_in 'comment_body', with: 'body edited'
+    click_button 'Update Comment'
+
+    assert has_content? 'body edited'
+  end
+
+  test 'delete a post' do
+    user = create_user_with_post(login=false)
+    login user
+
+    visit post_path Post.first
+    click_link 'delete_post_%d' % Post.first.id
+
+    assert has_content? I18n.t 'msg.post_deleted'
+  end
+
+  test 'delete a comment' do
+    user = create_user_with_comment(login=false)
+    login user
+
+    visit post_path Comment.first.post
+    click_link 'delete_comment_%d' % Comment.first.post.id
+
+    assert has_content? I18n.t 'msg.comment_deleted'
+  end
 end

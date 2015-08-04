@@ -1,5 +1,6 @@
 - if can? :destroy, comment
   %a.delete-comment.btn.btn-sm.btn-danger{ title: t('links.delete_comment'),
-                           href: comment_path(comment),
-                           'data-method': 'delete' }
+                                          href: comment_path(comment),
+                                          'data-method': 'delete',
+                                          id: 'delete_comment_%d' % comment.id }
     %span.glyphicon.glyphicon-trash

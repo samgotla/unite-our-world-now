@@ -85,6 +85,7 @@ class ActiveSupport::TestCase
     return user
   end
 
+  # Used for integration tests only (Capybara)
   def login(user)
     visit new_user_session_path
     fill_in 'user_email', with: user.email
