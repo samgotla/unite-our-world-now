@@ -1,9 +1,11 @@
 - if can? :approve, Post
   - if post.approved
     %a.moderate.btn.btn-sm.btn-default{ href: post_approve_path(post),
-                                       title: t('links.unapprove_post') }
+                                       title: t('links.unapprove_post'),
+                                       id: 'unapprove_post_%d' % post.id }
       %span.glyphicon.glyphicon-remove
   - else
     %a.moderate.btn.btn-sm.btn-default{ title: t('links.approve_post'),
-                                       href: post_approve_path(post) }
+                                       href: post_approve_path(post),
+                                       id: 'approve_post_%d' % post.id }
       %span.glyphicon.glyphicon-ok
