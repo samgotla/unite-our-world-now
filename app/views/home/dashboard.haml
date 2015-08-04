@@ -19,7 +19,7 @@
   %h3= t('headers.moderators_by_region')
   %em List of moderators grouped by region (?)
 
-- if current_user.admin? or current_user.moderator?
+- if can? :search, current_user
   %h3= t('headers.find_user')
   %em Find a user by phone or email (for manual verification, mod promotion, banning, etc.)
 
