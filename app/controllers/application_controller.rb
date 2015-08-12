@@ -6,11 +6,6 @@ class ApplicationController < ActionController::Base
   before_action :check_deleted
   after_action :check_sms_confirmed
 
-  # TODO: remove me!
-  if Rails.env.production?
-    http_basic_authenticate_with name: ENV['AUTH_USER'], password: ENV['AUTH_PASS']
-  end
-
   protected
   def check_deleted
     if user_signed_in? and current_user.deleted?
