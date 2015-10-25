@@ -22,4 +22,4 @@ test:
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  database: mysql://b8e8c782132af3:4457062b@us-cdbr-iron-east-02.cleardb.net/heroku_c2236e61d6c0ff8?reconnect=true
