@@ -1,0 +1,17 @@
+Connection Settings
+
+Host
+ec2-204-236-226-63.compute-1.amazonaws.com
+Database
+dqttj28c601oh
+User
+lrfnwdbtghcfzj
+Port
+5432
+Password
+Show
+Psql
+heroku pg:psql --app heroku-postgres-e784a08f HEROKU_POSTGRESQL_JADE
+URL
+Hide postgres://lrfnwdbtghcfzj:FvjZe3dWogeGMoqtx9JByCS9YN@ec2-204-236-226-63.compute-1.amazonaws.com:5432/dqttj28c601oh
+
