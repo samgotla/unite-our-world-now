@@ -15,7 +15,7 @@
 4. Add Heroku remote: `git remote add heroku git@heroku.com:unite-our-world-now.git`
 5. Push to Heroku: `git push heroku master`
 6. (First deployment only) Init DB: `heroku run "rake db:migrate"`
-7. (First deployment only) Create admin: `heroku run "users:create_admin"` (note password)
+7. (First deployment only) Create admin: `heroku run "rake users:create_admin"` (note password)
 
 ## Environment ##
 * `DATABASE_URL`: URL of ClearDB database
@@ -27,4 +27,3 @@
 
 ## Testing ##
 `rake test`
-
